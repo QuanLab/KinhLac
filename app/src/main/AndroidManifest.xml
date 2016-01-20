@@ -81,6 +81,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
+        <activity
+            android:name=".ListResume"
+            android:label="@string/title_activity_list_resume"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.phamquan.maydonhietdo.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

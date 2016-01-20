@@ -34,5 +34,7 @@
     <string name="title_activity_chart">Biểu đồ</string>
     <string name="title_activity_table">Kết quả bảng</string>
     <string name="title_activity_ho_so">Danh sách hồ sơ</string>
+    <string name="title_activity_danh_sach_ho_so">Danh bạ hồ sơ</string>
+    <string name="title_activity_list_resume">Danh bạ hồ sơ</string>
 
 </resources>

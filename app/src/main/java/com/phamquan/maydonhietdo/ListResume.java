@@ -1,22 +1,25 @@
 package com.phamquan.maydonhietdo;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
-public class Table extends AppCompatActivity {
+import java.util.ArrayList;
 
-    Button btnViewChart;
+public class ListResume extends AppCompatActivity {
+
+    private ListView listViewResume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_table);
+        setContentView(R.layout.activity_list_resume);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -30,14 +33,16 @@ public class Table extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        btnViewChart = (Button) findViewById(R.id.btnXemBieuDo);
+        listViewResume = (ListView) findViewById(R.id.listViewResume);
 
-        btnViewChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(Table.this, Chart.class);
-                startActivity(intent);
-            }
-        });
+        ArrayList<String> listResume = new ArrayList<>();
+        listResume.add("Pham Van Quan");
+        listResume.add("Vu Thanh Huan");
+        listResume.add("Tram Van Tuan");
+        listResume.add("Hoang Tuan Anh");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listResume );
+        listViewResume.setAdapter(adapter);
     }
+
 }
