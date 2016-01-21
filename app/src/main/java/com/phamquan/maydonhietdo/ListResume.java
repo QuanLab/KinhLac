@@ -1,18 +1,20 @@
 package com.phamquan.maydonhietdo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ListResume extends AppCompatActivity {
+public class ListResume extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView listViewResume;
 
@@ -35,14 +37,18 @@ public class ListResume extends AppCompatActivity {
 
         listViewResume = (ListView) findViewById(R.id.listViewResume);
 
-        ArrayList<String> listResume = new ArrayList<>();
-        listResume.add("Pham Van Quan");
-        listResume.add("Vu Thanh Huan");
-        listResume.add("Tram Van Tuan");
-        listResume.add("Hoang Tuan Anh");
+        ArrayList<String> arrResume = new ArrayList<>();
+        arrResume.add("Pham Van Quan");
+        arrResume.add("Vu Thanh Huan");
+        arrResume.add("Tram Van Tuan");
+        arrResume.add("Hoang Tuan Anh");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listResume );
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrResume );
         listViewResume.setAdapter(adapter);
     }
 
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3){
+        Intent intent = new Intent(ListResume.this, Resume.class);
+        startActivity(intent);
+    };
 }

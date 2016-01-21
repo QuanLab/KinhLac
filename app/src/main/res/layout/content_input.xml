@@ -378,7 +378,7 @@
             android:layout_height="wrap_content"
             android:text="@string/ket_qua_bang" />
         <Button
-            android:id="@+id/btnXemBieuDo"
+            android:id="@+id/btnClose"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/xem_bieu_do" />

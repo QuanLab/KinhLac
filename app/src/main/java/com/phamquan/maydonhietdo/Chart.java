@@ -7,7 +7,6 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.graphics.Typeface;
@@ -17,90 +16,86 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class Chart extends AppCompatActivity {
 
     private View mChart;
-    private String[] mMonth = new String[] {
-            "Jan", "Feb" , "Mar", "Apr", "May", "Jun",
-            "Jul", "Aug" , "Sep", "Oct", "Nov", "Dec"
+    private String[] mMonth = new String[]{
+            "Tì", "Can", "Vị", "Đởm", "Thận", "Bàng quang",
+            "Phế", "Đại trường", "Tâm bào", "Tam tiêu", "Tâm", "Tiểu trường"
     };
+
+    float[] benTrai;
+    float[] benPhai;
+    private Button btnXong;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        btnXong = (Button) findViewById(R.id.btnXong);
+
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!=null) {
+            benTrai = bundle.getFloatArray("benTrai");
+            benPhai = bundle.getFloatArray("benPhai");
+        }
+        openChart();
+
+        btnXong.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Button btnChart = (Button) findViewById(R.id.btn_chart);
-
-        btnChart.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openChart();
+            public void onClick(View v){
+                finish();
             }
         });
     }
 
-    private void openChart(){
-        int[] x = { 0,1,2,3,4,5,6,7, 8, 9, 10, 11 };
-        int[] income = { -2000,2500,2700,3000,2800,-3500,3700,3800, 0,0,0,0};
-        int[] expense = {2200, 2700, -2900, 2800, 2600, 3000, 3300, 3400, 0, 0, 0, 0 };
+    private void openChart() {
+        int[] x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        float [] income = benTrai;
+        float [] expense = benPhai;
+        int[] color = {};
 
-        // Creating an XYSeries for Income
-        XYSeries incomeSeries = new XYSeries("Income");
-        // Creating an XYSeries for Expense
-        XYSeries expenseSeries = new XYSeries("Expense");
-        // Adding data to Income and Expense Series
-        for(int i=0;i<x.length;i++){
-            incomeSeries.add(i,income[i]);
-            expenseSeries.add(i,expense[i]);
+        XYSeries incomeSeries = new XYSeries("Trai");
+        XYSeries expenseSeries = new XYSeries("Phai");
+
+        for (int i = 0; i < x.length; i++) {
+            incomeSeries.add(i, income[i]);
+            expenseSeries.add(i, expense[i]);
         }
 
         // Creating a dataset to hold each series
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
-        // Adding Income Series to the dataset
         dataset.addSeries(incomeSeries);
-        // Adding Expense Series to dataset
         dataset.addSeries(expenseSeries);
 
         // Creating XYSeriesRenderer to customize incomeSeries
-        XYSeriesRenderer incomeRenderer = new XYSeriesRenderer();
-        incomeRenderer.setColor(Color.CYAN); //color of the graph set to cyan
-        incomeRenderer.setFillPoints(true);
-        incomeRenderer.setLineWidth(2);
-        incomeRenderer.setDisplayChartValues(true);
-        incomeRenderer.setDisplayChartValuesDistance(10); //setting chart value distance
+        XYSeriesRenderer tayTraiRenderer = new XYSeriesRenderer();
+        tayTraiRenderer.setColor(Color.CYAN);
+        tayTraiRenderer.setFillPoints(true);
+        tayTraiRenderer.setLineWidth(2);
+        tayTraiRenderer.setDisplayChartValues(true);
+        tayTraiRenderer.setDisplayChartValuesDistance(10); //setting chart value distance
 
         // Creating XYSeriesRenderer to customize expenseSeries
-        XYSeriesRenderer expenseRenderer = new XYSeriesRenderer();
-        expenseRenderer.setColor(Color.GREEN);
-        expenseRenderer.setFillPoints(true);
-        expenseRenderer.setLineWidth(2);
-        expenseRenderer.setDisplayChartValues(true);
+        XYSeriesRenderer tayPhaiRenderer = new XYSeriesRenderer();
+        tayPhaiRenderer.setColor(Color.GREEN);
+        tayPhaiRenderer.setFillPoints(true);
+        tayPhaiRenderer.setLineWidth(2);
+        tayPhaiRenderer.setDisplayChartValues(true);
 
         // Creating a XYMultipleSeriesRenderer to customize the whole chart
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
         multiRenderer.setOrientation(XYMultipleSeriesRenderer.Orientation.HORIZONTAL);
         multiRenderer.setXLabels(0);
-        multiRenderer.setChartTitle("Income vs Expense Chart");
-        multiRenderer.setXTitle("Year 2014");
-        multiRenderer.setYTitle("Amount in Dollars");
+        multiRenderer.setChartTitle("Biểu đồ kết quả đo");
+        multiRenderer.setXTitle("Các bộ phận");
+        multiRenderer.setYTitle("Phần trăm");
 
         /***
          * Customizing graphs
@@ -147,11 +142,11 @@ public class Chart extends AppCompatActivity {
         multiRenderer.setYLabels(10);
         // setting y axis max value, Since i'm using static values inside the graph so i'm setting y max value to 4000.
         // if you use dynamic values then get the max y value and set here
-        multiRenderer.setYAxisMax(5000);
+        multiRenderer.setYAxisMax(400);
         //setting used to move the graph on xaxiz to .5 to the right
         multiRenderer.setXAxisMin(-0.5);
-//setting max values to be display in x axis
-        multiRenderer.setXAxisMax(11);
+        //setting max values to be display in x axis
+        multiRenderer.setXAxisMax(12);
         //setting bar size or space between two bars
         multiRenderer.setBarSpacing(0.5);
         //Setting background color of the graph to transparent
@@ -163,22 +158,22 @@ public class Chart extends AppCompatActivity {
         //setting the margin size for the graph in the order top, left, bottom, right
         multiRenderer.setMargins(new int[]{30, 30, 30, 30});
 
-        for(int i=0; i< x.length;i++){
+        for (int i = 0; i < x.length; i++) {
             multiRenderer.addXTextLabel(i, mMonth[i]);
         }
 
-        // Adding incomeRenderer and expenseRenderer to multipleRenderer
+        // Adding tayTraiRenderer and tayPhaiRenderer to multipleRenderer
         // Note: The order of adding dataseries to dataset and renderers to multipleRenderer
         // should be same
-        multiRenderer.addSeriesRenderer(incomeRenderer);
-        multiRenderer.addSeriesRenderer(expenseRenderer);
+        multiRenderer.addSeriesRenderer(tayTraiRenderer);
+        multiRenderer.addSeriesRenderer(tayPhaiRenderer);
 
         //this part is used to display graph on the xml
         LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
         //remove any views before u paint the chart
         chartContainer.removeAllViews();
         //drawing bar chart
-        mChart = ChartFactory.getBarChartView(Chart.this, dataset, multiRenderer,Type.DEFAULT);
+        mChart = ChartFactory.getBarChartView(Chart.this, dataset, multiRenderer, Type.DEFAULT);
         //adding the view to the linearlayout
         chartContainer.addView(mChart);
     }

@@ -6,8 +6,14 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class Resume extends AppCompatActivity {
+
+    private ListView lvLanKham;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,15 @@ public class Resume extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
+        lvLanKham = (ListView) findViewById(R.id.listViewdLanKham);
+        ArrayList<String> arrLanKham = new ArrayList<>();
+
+        arrLanKham.add("Lần khám số 1");
+        arrLanKham.add("Lần khám số 2");
+        arrLanKham.add("Lần khám số 2");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrLanKham );
+        lvLanKham.setAdapter(adapter);
+    }
 }
