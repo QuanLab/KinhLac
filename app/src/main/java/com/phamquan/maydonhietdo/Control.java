@@ -8,6 +8,7 @@ public class Control {
     private boolean initControl = false;
     private float [] benTrai;
     private float [] benPhai;
+    private static String hoTen;
 
     public float[] getBenTrai(){
         return  benTrai;
@@ -27,5 +28,9 @@ public class Control {
 
     public boolean isInitControl(){
         return initControl;
+    }
+
+    public static String getHoTen(){
+        return hoTen;
     }
 }

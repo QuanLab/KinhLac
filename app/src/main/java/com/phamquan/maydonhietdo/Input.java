@@ -2,16 +2,16 @@ package com.phamquan.maydonhietdo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import java.util.ArrayList;
 
 public class Input extends AppCompatActivity {
 
+
+    ArrayList<String> thongTin;
     Button btnKetQuaBang, btnChart;
     EditText edtTieuTruong, edtTieuTruong_,
             edtTam, edtTam_,
@@ -40,23 +40,13 @@ public class Input extends AppCompatActivity {
     //ti le phan tram  sau khi tinh
     private static float[] phanTramTrai = new float[12];
     private static float[] phanTramPhai = new float[12];
+    private static float[] phanTramTrungBinh = new float[12];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-            }
-        });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnKetQuaBang = (Button) findViewById(R.id.btnKetQuaBang);
         btnChart = (Button) findViewById(R.id.btnClose);
@@ -87,6 +77,12 @@ public class Input extends AppCompatActivity {
         edtTi = (EditText) findViewById(R.id.EditTextTi);
         edtTi_ = (EditText) findViewById(R.id.EditTextTi_);
 
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null){
+            thongTin = bundle.getStringArrayList("thongTin");
+            System.out.println("Input received");
+        }
+
         btnKetQuaBang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +105,7 @@ public class Input extends AppCompatActivity {
         Intent intent = new Intent(this, Table.class);
         intent.putExtra("benTrai", phanTramTrai);
         intent.putExtra("benPhai", phanTramPhai);
+        intent.putExtra("thongTin", thongTin);
         startActivity(intent);
     }
 
@@ -117,6 +114,9 @@ public class Input extends AppCompatActivity {
         Intent intent = new Intent(Input.this, Chart.class);
         intent.putExtra("benTrai", phanTramTrai);
         intent.putExtra("benPhai", phanTramPhai);
+        intent.putExtra("trungBinh", phanTramTrungBinh);
+        intent.putExtra("thongTin", thongTin);
+        System.out.println("Sending in openOhart" + thongTin);
         startActivity(intent);
     }
 
@@ -194,15 +194,20 @@ public class Input extends AppCompatActivity {
         maxChanPhai = getMax(chanPhai);
         maxHaiChan = Math.max(maxChanTrai, maxChanPhai);
 
-        //ti le phan tram theo cac bo phan tren co the
-        float pTieuTruong, pTieuTruong_, pTam, pTam_, pTamTieu, pTamTieu_, pTamBao, pTamBao_,
-                pDaiTuong, pDaiTruong_, pPhe, pPhe_, pBangQuang, pBangQuang_, pThan, pThan_,
-                pDom, pDom_, pVi, pVi_, pCan, pCan_, pTi, pTi_;
+        minTayTrai = getMin(tayTrai);
+        minTayPhai = getMin(tayPhai);
+        minHaiTay = Math.min(minTayTrai, minTayPhai);
+
+        minChanTrai = getMin(chanTrai);
+        minChanPhai = getMin(chanPhai);
+        minHaiChan = Math.min(minChanTrai, minChanPhai);
 
         float percentTayTrai;
-        float percenetChanTrai;
+        float percentChanTrai;
         float percentTayPhai;
         float percentChanPhai;
+        float percentTay;
+        float percentChan;
 
         float maxMinHaiTay = maxHaiTay - minHaiTay;
         float maxMinHaiChan = maxHaiChan - minHaiChan;
@@ -215,16 +220,29 @@ public class Input extends AppCompatActivity {
         * /(nhietDoMax - nhietDoMin)
         * */
             percentTayTrai = 300 * (tayTrai[i] + tayPhai[i] - maxTayTrai - minTayTrai) / maxMinHaiTay;
-            percenetChanTrai = 300 * (chanTrai[i] + chanPhai[i] - maxChanTrai - minChanTrai) / maxMinHaiChan;
+            percentChanTrai = 300 * (chanTrai[i] + chanPhai[i] - maxChanTrai - minChanTrai) / maxMinHaiChan;
 
             percentTayPhai = 300 * (tayTrai[i] + tayPhai[i] - maxTayPhai - minTayPhai) / maxMinHaiTay;
             percentChanPhai = 300 * (chanTrai[i] + chanPhai[i] - maxChanPhai - minChanPhai) / maxMinHaiChan;
 
+            percentTay = 300 * (tayTrai[i] + tayPhai[i] - maxHaiTay - minHaiTay) / maxMinHaiTay;
+            percentChan = 300 * (chanTrai[i] + chanPhai[i] - maxHaiChan - minHaiChan) / maxMinHaiTay;
+
+            percentTayTrai = (float) Math.round(percentTayTrai * 100) / 100;
+            percentChanTrai = (float) Math.round(percentChanTrai * 100) / 100;
+            percentTayPhai = (float) Math.round(percentTayPhai * 100) / 100;
+            percentChanPhai = (float) Math.round(percentChanPhai * 100) / 100;
+            percentTay = (float) Math.round(percentTay * 100) / 100;
+            percentChan = (float) Math.round(percentChan * 100) / 100;
+
             phanTramTrai[i] = percentTayTrai;
-            phanTramTrai[j] = percenetChanTrai;
+            phanTramTrai[j] = percentChanTrai;
 
             phanTramPhai[i] = percentTayPhai;
             phanTramPhai[j] = percentChanPhai;
+
+            phanTramTrungBinh[i] = percentTay;
+            phanTramTrungBinh[j] = percentChan;
             ++j;
         }
     }
@@ -232,6 +250,7 @@ public class Input extends AppCompatActivity {
     public float getMin(float[] arrFloat) {
 
         float min = arrFloat[0];
+
         for (int i = 0; i < arrFloat.length; i++) {
             if (arrFloat[i] < min) {
                 min = arrFloat[i];

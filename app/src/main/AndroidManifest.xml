@@ -90,6 +90,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
+        <activity
+            android:name=".DongBenhNhan"
+            android:label="@string/title_activity_dong_benh_nhan"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

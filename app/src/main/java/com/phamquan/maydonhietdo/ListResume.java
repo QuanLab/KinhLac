@@ -14,41 +14,29 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ListResume extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ListResume extends AppCompatActivity {
 
     private ListView listViewResume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_resume);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listViewResume = (ListView) findViewById(R.id.listViewResume);
 
-        ArrayList<String> arrResume = new ArrayList<>();
-        arrResume.add("Pham Van Quan");
-        arrResume.add("Vu Thanh Huan");
-        arrResume.add("Tram Van Tuan");
-        arrResume.add("Hoang Tuan Anh");
+        ArrayList<BenhNhan> mangBenhNhan = new ArrayList<>();
+        mangBenhNhan.add(new BenhNhan("Pham Van Quan", 1995));
+        mangBenhNhan.add(new BenhNhan("Vu Thanh Huan", 1995));
+        mangBenhNhan.add(new BenhNhan("Tram Van Tuan", 1995));
+        mangBenhNhan.add(new BenhNhan("Hoang Tuan Anh", 1995));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrResume );
+        ListAdapter adapter = new ListAdapter(this, R.layout.activity_dong_benh_nhan, mangBenhNhan );
         listViewResume.setAdapter(adapter);
     }
-
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3){
-        Intent intent = new Intent(ListResume.this, Resume.class);
-        startActivity(intent);
-    };
 }

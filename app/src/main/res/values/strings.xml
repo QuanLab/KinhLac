@@ -24,6 +24,8 @@
     <string name="ti">Tì</string>
     <string name="ket_qua_bang">Kết quả bảng</string>
     <string name="xem_bieu_do">Xem biểu đồ</string>
+    <string name="bieu_do_mot_cot">Một cột</string>
+    <string name="bieu_do_hai_cot">Hai cột</string>
     <string name="xong">Xong</string>
     <string name="about_us">Giới thiệu đang được cập nhật, sẽ hoàn thành trong thời gian sớm nhất</string>
     <string name="guideline">Hướng dẫn sử dụng đang được cập nhật. Sẽ hoàn thành trong thời gian sớm nhất</string>
@@ -35,5 +37,6 @@
     <string name="title_activity_ho_so">Danh sách hồ sơ</string>
     <string name="title_activity_danh_sach_ho_so">Danh bạ hồ sơ</string>
     <string name="title_activity_list_resume">Danh bạ hồ sơ</string>
+    <string name="title_activity_dong_benh_nhan">DongBenhNhan</string>
 
 </resources>
