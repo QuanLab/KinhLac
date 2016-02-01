@@ -1,4 +1,4 @@
-package com.phamquan.maydonhietdo;
+package com.phamquan.maydonhietdo.domoi;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.phamquan.maydonhietdo.R;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PersonInfo extends AppCompatActivity {
 
@@ -36,6 +41,10 @@ public class PersonInfo extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal = Calendar.getInstance();
+        String strDateTime = dateFormat.format(cal.getTime());
+
         btnBatDauDo = (Button) findViewById(R.id.btnBatDauDo);
 
         edtHoTen = (EditText) findViewById(R.id.editText_ho_ten);
@@ -43,12 +52,7 @@ public class PersonInfo extends AppCompatActivity {
         edtTrieuChung = (EditText) findViewById(R.id.editText_trieu_chung);
         edtSoDienThoai = (EditText) findViewById(R.id.editText_so_dien_thoai);
         edtNgayDo = (EditText) findViewById(R.id.editText_ngay_do);
-
-        hoTen = edtHoTen.getText().toString();
-        diaChi = edtDiaChi.getText().toString();
-        trieuChung = edtTrieuChung.getText().toString();
-        ngayDo = edtNgayDo.getText().toString();
-        soDienThoai = edtSoDienThoai.getText().toString();
+        edtNgayDo.setText(strDateTime);
 
         btnBatDauDo.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,4 +1,4 @@
-package com.phamquan.maydonhietdo;
+package com.phamquan.maydonhietdo.other;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -6,19 +6,15 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
-import java.util.ArrayList;
+import com.phamquan.maydonhietdo.R;
 
-public class Resume extends AppCompatActivity {
-
-    private ListView lvLanKham;
+public class Guideline extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resume);
+        setContentView(R.layout.activity_guideline);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -31,15 +27,6 @@ public class Resume extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        lvLanKham = (ListView) findViewById(R.id.listViewdLanKham);
-        ArrayList<String> arrLanKham = new ArrayList<>();
-
-        arrLanKham.add("Lần khám số 1");
-        arrLanKham.add("Lần khám số 2");
-        arrLanKham.add("Lần khám số 2");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrLanKham );
-        lvLanKham.setAdapter(adapter);
     }
+
 }

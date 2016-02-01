@@ -1,4 +1,4 @@
-package com.phamquan.maydonhietdo;
+package com.phamquan.maydonhietdo.hoso;
 
 import android.content.Context;
 import android.support.v4.view.LayoutInflaterCompat;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.phamquan.maydonhietdo.BenhNhan;
+import com.phamquan.maydonhietdo.R;
 
 import java.util.List;
 

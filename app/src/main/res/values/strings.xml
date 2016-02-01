@@ -38,5 +38,7 @@
     <string name="title_activity_danh_sach_ho_so">Danh bạ hồ sơ</string>
     <string name="title_activity_list_resume">Danh bạ hồ sơ</string>
     <string name="title_activity_dong_benh_nhan">DongBenhNhan</string>
+    <string name="title_activity_ho_so_benh_nhan">Hồ sơ</string>
+    <string name="title_activity_dong_lan_do">DongLanDo</string>
 
 </resources>

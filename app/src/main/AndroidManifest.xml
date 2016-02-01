@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PersonInfo"
+            android:name=".domoi.PersonInfo"
             android:label="@string/title_activity_person_info"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -28,16 +28,16 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".Input"
+            android:name=".domoi.Input"
             android:label="@string/title_activity_input"
-            android:parentActivityName=".PersonInfo"
+            android:parentActivityName=".domoi.PersonInfo"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.phamquan.maydonhietdo.PersonInfo" />
+                android:value=".domoi.PersonInfo" />
         </activity>
         <activity
-            android:name=".AboutUs"
+            android:name=".other.AboutUs"
             android:label="@string/title_activity_about_us"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -46,7 +46,7 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".Guideline"
+            android:name=".other.Guideline"
             android:label="@string/title_activity_guideline"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -55,25 +55,25 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".Chart"
+            android:name=".domoi.Chart"
             android:label="@string/title_activity_chart"
-            android:parentActivityName=".Input"
+            android:parentActivityName=".domoi.Input"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.phamquan.maydonhietdo.Input" />
+                android:value=".domoi.Input" />
         </activity>
         <activity
-            android:name=".Table"
+            android:name=".domoi.Table"
             android:label="@string/title_activity_table"
-            android:parentActivityName=".Input"
+            android:parentActivityName=".domoi.Input"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.phamquan.maydonhietdo.Input" />
+                android:value=".domoi.Input" />
         </activity>
         <activity
-            android:name=".Resume"
+            android:name=".hoso.Resume"
             android:label="@string/title_activity_ho_so"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -82,7 +82,7 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".ListResume"
+            android:name=".hoso.ListResume"
             android:label="@string/title_activity_list_resume"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -91,9 +91,14 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".DongBenhNhan"
-            android:label="@string/title_activity_dong_benh_nhan"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".hoso.HoSoBenhNhan"
+            android:label="@string/title_activity_ho_so_benh_nhan"
+            android:parentActivityName=".hoso.ListResume"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".hoso.ListResume" />
+        </activity>
     </application>
 
 </manifest>

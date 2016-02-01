@@ -1,10 +1,12 @@
-package com.phamquan.maydonhietdo;
+package com.phamquan.maydonhietdo.domoi;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.phamquan.maydonhietdo.R;
 
 public class Table extends AppCompatActivity {
 
