@@ -24,31 +24,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Người đo mới"
-            android:id="@+id/btnNewPerson" />
+            android:id="@+id/btnNewPerson"
+            android:onClick="onClick" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Xem hồ sơ"
-            android:id="@+id/btnResume" />
+            android:id="@+id/btnResume"
+            android:onClick="onClick" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hướng dẫn"
-            android:id="@+id/btnGuideline" />
+            android:id="@+id/btnGuideline"
+            android:onClick="onClick" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Giới thiệu"
-            android:id="@+id/btnAboutUs" />
+            android:id="@+id/btnAboutUs"
+            android:onClick="onClick" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Thoát"
             android:id="@+id/btnExit"
-            android:textColor="#fd0000" />
+            android:textColor="#fd0000"
+            android:onClick="onClick" />
     </LinearLayout>
 </LinearLayout>

@@ -4,26 +4,30 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.phamquan.maydonhietdo.R;
+import com.phamquan.maydonhietdo.database.BenhNhan;
+import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
+import com.phamquan.maydonhietdo.database.DBAintergration;
+import com.phamquan.maydonhietdo.database.LanKham;
 
 import java.util.ArrayList;
 
 public class Input extends AppCompatActivity {
 
+    private ArrayList<String> thongTin;
+    private BenhNhanDataSource dataSource;
 
-    ArrayList<String> thongTin;
-    Button btnKetQuaBang, btnChart;
-    EditText edtTieuTruong, edtTieuTruong_,
+    private EditText edtTieuTruong, edtTieuTruong_,
             edtTam, edtTam_,
             edtTamTieu, edtTamTieu_,
             edtTamBao, edtTamBao_,
             edtDaiTruong, edtDaiTruong_,
             edtPhe, edtPhe_,
 
-            edtBangQuang, edtBangQuang_,
+    edtBangQuang, edtBangQuang_,
             edtThan, edtThan_,
             edtDom, edtDom_,
             edtVi, edtVi_,
@@ -31,7 +35,7 @@ public class Input extends AppCompatActivity {
             edtTi, edtTi_;
 
     private float maxHaiTay, minHaiTay, maxHaiChan, minHaiChan;
-    private float maxTayTrai,minTayTrai, maxTayPhai, minTayPhai ;
+    private float maxTayTrai, minTayTrai, maxTayPhai, minTayPhai;
     private float maxChanTrai, minChanTrai, maxChanPhai, minChanPhai;
 
     // nhom nhiet do tren cac phan co the
@@ -51,56 +55,34 @@ public class Input extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
 
-        btnKetQuaBang = (Button) findViewById(R.id.btnKetQuaBang);
-        btnChart = (Button) findViewById(R.id.btnClose);
-
-        edtTieuTruong = (EditText) findViewById(R.id.EditTextTieuTruong);
-        edtTieuTruong_ = (EditText) findViewById(R.id.EditTextTieuTruong_);
-        edtTam = (EditText) findViewById(R.id.EditTextTam);
-        edtTam_ = (EditText) findViewById(R.id.EditTextTam_);
-        edtTamTieu = (EditText) findViewById(R.id.EditTextTamTieu);
-        edtTamTieu_ = (EditText) findViewById(R.id.EditTextTamTieu_);
-        edtTamBao = (EditText) findViewById(R.id.EditTextTamBao);
-        edtTamBao_ = (EditText) findViewById(R.id.EditTextTamBao_);
-        edtDaiTruong = (EditText) findViewById(R.id.EditTextDaiTruong);
-        edtDaiTruong_ = (EditText) findViewById(R.id.EditTextDaiTruong_);
-        edtPhe = (EditText) findViewById(R.id.EditTextPhe);
-        edtPhe_ = (EditText) findViewById(R.id.EditTextPhe_);
-
-        edtBangQuang = (EditText) findViewById(R.id.EditTextBangQuang);
-        edtBangQuang_ = (EditText) findViewById(R.id.EditTextBangQuang_);
-        edtThan = (EditText) findViewById(R.id.EditTextThan);
-        edtThan_ = (EditText) findViewById(R.id.EditTextThan_);
-        edtDom = (EditText) findViewById(R.id.EditTextDom);
-        edtDom_ = (EditText) findViewById(R.id.EditTextDom_);
-        edtVi = (EditText) findViewById(R.id.EditTextVi);
-        edtVi_ = (EditText) findViewById(R.id.EditTextVi_);
-        edtCan = (EditText) findViewById(R.id.EditTextCan);
-        edtCan_ = (EditText) findViewById(R.id.EditTextCan_);
-        edtTi = (EditText) findViewById(R.id.EditTextTi);
-        edtTi_ = (EditText) findViewById(R.id.EditTextTi_);
+        reflex();
 
         Bundle bundle = getIntent().getExtras();
-        if(bundle!=null){
+        if (bundle != null) {
             thongTin = bundle.getStringArrayList("thongTin");
-            System.out.println("Input received");
         }
+    }
 
-        btnKetQuaBang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                caculateInit();
-                openTable();
-            }
-        });
+    public void onClick(View view) {
 
-        btnChart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                caculateInit();
-                openChart();
+        if (caculateInit()) {
+
+           if(!DBAintergration.isDataSaved()){
+               taoHoSoBenhNhan();
+               DBAintergration.setDataSaved(true);
+           }
+
+            switch (view.getId()) {
+
+                case R.id.btnKetQuaBang:
+                    openTable();
+                    break;
+
+                case R.id.btnXemBieuDo:
+                    openChart();
+                    break;
             }
-        });
+        }
     }
 
     public void openTable() {
@@ -112,18 +94,17 @@ public class Input extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openChart(){
+    public void openChart() {
 
         Intent intent = new Intent(Input.this, Chart.class);
         intent.putExtra("benTrai", phanTramTrai);
         intent.putExtra("benPhai", phanTramPhai);
         intent.putExtra("trungBinh", phanTramTrungBinh);
         intent.putExtra("thongTin", thongTin);
-        System.out.println("Sending in openOhart" + thongTin);
         startActivity(intent);
     }
 
-    public void caculateInit() {
+    public boolean caculateInit() {
 
         String tieu_truong = edtTieuTruong.getText().toString();
         String tieu_truong_ = edtTieuTruong_.getText().toString();
@@ -151,9 +132,19 @@ public class Input extends AppCompatActivity {
         String ti = edtTi.getText().toString();
         String ti_ = edtTi_.getText().toString();
 
+        if (tieu_truong.isEmpty() || tieu_truong_.isEmpty() || tam.isEmpty() || tam_.isEmpty()
+                || tam_tieu.isEmpty() || tam_tieu_.isEmpty() || tam_bao.isEmpty() || tam_bao_.isEmpty()
+                || dai_truong.isEmpty() || dai_truong_.isEmpty() || phe.isEmpty()
+                || bang_quang.isEmpty() || bang_quang_.isEmpty()
+                || than.isEmpty() || than_.isEmpty() || dom.isEmpty() || dom_.isEmpty()
+                || vi.isEmpty() || vi_.isEmpty() || can.isEmpty() || can_.isEmpty() || ti.isEmpty() || ti_.isEmpty()) {
+            showE();
+            return false;
+        }
+
         float tieuTruong = Float.parseFloat(tieu_truong);
         float tieuTruong_ = Float.parseFloat(tieu_truong_);
-        float tamT =Float.parseFloat(tam);
+        float tamT = Float.parseFloat(tam);
         float tamP = Float.parseFloat(tam_);
         float tamTieu = Float.parseFloat(tam_tieu);
         float tamTieu_ = Float.parseFloat(tam_tieu_);
@@ -164,11 +155,20 @@ public class Input extends AppCompatActivity {
         float pheT = Float.parseFloat(phe);
         float pheP = Float.parseFloat(phe_);
 
-        tayTrai[0] = tieuTruong; tayTrai[1] = tamT; tayTrai[2] = tamTieu;
-        tayTrai[3] = tamBao; tayTrai[4]= daiTruong; tayTrai[5] = pheT;
 
-        tayPhai[0] = tieuTruong_; tayPhai[1]= tamP; tayPhai[2] = tamTieu_;
-        tayPhai[3] = tamBao_; tayPhai[4] = daiTruong_; tayPhai[5] = pheP;
+        tayTrai[0] = tieuTruong;
+        tayTrai[1] = tamT;
+        tayTrai[2] = tamTieu;
+        tayTrai[3] = tamBao;
+        tayTrai[4] = daiTruong;
+        tayTrai[5] = pheT;
+
+        tayPhai[0] = tieuTruong_;
+        tayPhai[1] = tamP;
+        tayPhai[2] = tamTieu_;
+        tayPhai[3] = tamBao_;
+        tayPhai[4] = daiTruong_;
+        tayPhai[5] = pheP;
 
         float bangQuang = Float.parseFloat(bang_quang);
         float bangQuang_ = Float.parseFloat(bang_quang_);
@@ -183,11 +183,19 @@ public class Input extends AppCompatActivity {
         float tiT = Float.parseFloat(ti);
         float tiP = Float.parseFloat(ti_);
 
-        chanTrai[0] = bangQuang; chanTrai[1] = thanT; chanTrai[2] = domT;
-        chanTrai[3] = viT; chanTrai[4] = canT; chanTrai [5] = tiT;
+        chanTrai[0] = bangQuang;
+        chanTrai[1] = thanT;
+        chanTrai[2] = domT;
+        chanTrai[3] = viT;
+        chanTrai[4] = canT;
+        chanTrai[5] = tiT;
 
-        chanPhai[0] = bangQuang_; chanPhai[1] = thanP; chanPhai[2] = domP;
-        chanPhai[3] = viP; chanPhai[4] = canP; chanPhai [5] = tiP;
+        chanPhai[0] = bangQuang_;
+        chanPhai[1] = thanP;
+        chanPhai[2] = domP;
+        chanPhai[3] = viP;
+        chanPhai[4] = canP;
+        chanPhai[5] = tiP;
 
         maxTayTrai = getMax(tayTrai);
         maxTayPhai = getMax(tayPhai);
@@ -217,7 +225,7 @@ public class Input extends AppCompatActivity {
 
         int j = 6;
 
-        for(int i = 0; i<6; i++){
+        for (int i = 0; i < 6; i++) {
         /*
         * 3*(nhietDoTayTrai + nhietDoTayPhai - nhietDoMaxOTay - nhietDoMinOTay)
         * /(nhietDoMax - nhietDoMin)
@@ -248,6 +256,29 @@ public class Input extends AppCompatActivity {
             phanTramTrungBinh[j] = percentChan;
             ++j;
         }
+        return true;
+    }
+
+    public void taoHoSoBenhNhan() {
+
+        dataSource = new BenhNhanDataSource(this);
+        dataSource.open();
+
+        if(!DBAintergration.isDaCoHoSo()){
+
+            dataSource.insertBenhNhan(new BenhNhan(thongTin.get(0), thongTin.get(1), thongTin.get(2), thongTin.get(3)));
+        }
+
+        String soLieu = DBAintergration.floatToString(phanTramTrungBinh);
+        String trieuChung = thongTin.get(4);
+        String ngayDo = thongTin.get(5);
+//
+//        dataSource.insertLanKham(new LanKham(1 , trieuChung , soLieu, ngayDo));
+
+    }
+
+    public void showE() {
+        Toast.makeText(this, "Nhập thiếu số liệu rồi ông bạn ơi!", Toast.LENGTH_SHORT).show();
     }
 
     public float getMin(float[] arrFloat) {
@@ -259,6 +290,7 @@ public class Input extends AppCompatActivity {
                 min = arrFloat[i];
             }
         }
+
         return min;
     }
 
@@ -271,5 +303,34 @@ public class Input extends AppCompatActivity {
             }
         }
         return max;
+    }
+
+    private void reflex() {
+
+        edtTieuTruong = (EditText) findViewById(R.id.EditTextTieuTruong);
+        edtTieuTruong_ = (EditText) findViewById(R.id.EditTextTieuTruong_);
+        edtTam = (EditText) findViewById(R.id.EditTextTam);
+        edtTam_ = (EditText) findViewById(R.id.EditTextTam_);
+        edtTamTieu = (EditText) findViewById(R.id.EditTextTamTieu);
+        edtTamTieu_ = (EditText) findViewById(R.id.EditTextTamTieu_);
+        edtTamBao = (EditText) findViewById(R.id.EditTextTamBao);
+        edtTamBao_ = (EditText) findViewById(R.id.EditTextTamBao_);
+        edtDaiTruong = (EditText) findViewById(R.id.EditTextDaiTruong);
+        edtDaiTruong_ = (EditText) findViewById(R.id.EditTextDaiTruong_);
+        edtPhe = (EditText) findViewById(R.id.EditTextPhe);
+        edtPhe_ = (EditText) findViewById(R.id.EditTextPhe_);
+
+        edtBangQuang = (EditText) findViewById(R.id.EditTextBangQuang);
+        edtBangQuang_ = (EditText) findViewById(R.id.EditTextBangQuang_);
+        edtThan = (EditText) findViewById(R.id.EditTextThan);
+        edtThan_ = (EditText) findViewById(R.id.EditTextThan_);
+        edtDom = (EditText) findViewById(R.id.EditTextDom);
+        edtDom_ = (EditText) findViewById(R.id.EditTextDom_);
+        edtVi = (EditText) findViewById(R.id.EditTextVi);
+        edtVi_ = (EditText) findViewById(R.id.EditTextVi_);
+        edtCan = (EditText) findViewById(R.id.EditTextCan);
+        edtCan_ = (EditText) findViewById(R.id.EditTextCan_);
+        edtTi = (EditText) findViewById(R.id.EditTextTi);
+        edtTi_ = (EditText) findViewById(R.id.EditTextTi_);
     }
 }

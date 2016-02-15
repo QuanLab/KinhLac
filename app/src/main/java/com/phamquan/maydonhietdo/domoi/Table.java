@@ -10,7 +10,7 @@ import com.phamquan.maydonhietdo.R;
 
 public class Table extends AppCompatActivity {
 
-    Button btnClose;
+    private Button btnClose;
 
     private EditText edtTieuTruong, edtTieuTruong_,
             edtTam, edtTam_,
@@ -32,32 +32,7 @@ public class Table extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
 
-        edtTieuTruong = (EditText) findViewById(R.id.EditTextTieuTruong);
-        edtTieuTruong_ = (EditText) findViewById(R.id.EditTextTieuTruong_);
-        edtTam = (EditText) findViewById(R.id.EditTextTam);
-        edtTam_ = (EditText) findViewById(R.id.EditTextTam_);
-        edtTamTieu = (EditText) findViewById(R.id.EditTextTamTieu);
-        edtTamTieu_ = (EditText) findViewById(R.id.EditTextTamTieu_);
-        edtTamBao = (EditText) findViewById(R.id.EditTextTamBao);
-        edtTamBao_ = (EditText) findViewById(R.id.EditTextTamBao_);
-        edtDaiTruong = (EditText) findViewById(R.id.EditTextDaiTruong);
-        edtDaiTruong_ = (EditText) findViewById(R.id.EditTextDaiTruong_);
-        edtPhe = (EditText) findViewById(R.id.EditTextPhe);
-        edtPhe_ = (EditText) findViewById(R.id.EditTextPhe_);
-
-        edtBangQuang = (EditText) findViewById(R.id.EditTextBangQuang);
-        edtBangQuang_ = (EditText) findViewById(R.id.EditTextBangQuang_);
-        edtThan = (EditText) findViewById(R.id.EditTextThan);
-        edtThan_ = (EditText) findViewById(R.id.EditTextThan_);
-        edtDom = (EditText) findViewById(R.id.EditTextDom);
-        edtDom_ = (EditText) findViewById(R.id.EditTextDom_);
-        edtVi = (EditText) findViewById(R.id.EditTextVi);
-        edtVi_ = (EditText) findViewById(R.id.EditTextVi_);
-        edtCan = (EditText) findViewById(R.id.EditTextCan);
-        edtCan_ = (EditText) findViewById(R.id.EditTextCan_);
-        edtTi = (EditText) findViewById(R.id.EditTextTi);
-        edtTi_ = (EditText) findViewById(R.id.EditTextTi_);
-
+        reflex();
 
         Bundle bundle = getIntent().getExtras();
 
@@ -92,13 +67,42 @@ public class Table extends AppCompatActivity {
             edtTi_.setText(String.valueOf(benPhai[11]));
         }
 
-        btnClose = (Button) findViewById(R.id.btnClose);
-
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+    }
+
+    private void reflex(){
+
+        edtTieuTruong = (EditText) findViewById(R.id.EditTextTieuTruong);
+        edtTieuTruong_ = (EditText) findViewById(R.id.EditTextTieuTruong_);
+        edtTam = (EditText) findViewById(R.id.EditTextTam);
+        edtTam_ = (EditText) findViewById(R.id.EditTextTam_);
+        edtTamTieu = (EditText) findViewById(R.id.EditTextTamTieu);
+        edtTamTieu_ = (EditText) findViewById(R.id.EditTextTamTieu_);
+        edtTamBao = (EditText) findViewById(R.id.EditTextTamBao);
+        edtTamBao_ = (EditText) findViewById(R.id.EditTextTamBao_);
+        edtDaiTruong = (EditText) findViewById(R.id.EditTextDaiTruong);
+        edtDaiTruong_ = (EditText) findViewById(R.id.EditTextDaiTruong_);
+        edtPhe = (EditText) findViewById(R.id.EditTextPhe);
+        edtPhe_ = (EditText) findViewById(R.id.EditTextPhe_);
+
+        edtBangQuang = (EditText) findViewById(R.id.EditTextBangQuang);
+        edtBangQuang_ = (EditText) findViewById(R.id.EditTextBangQuang_);
+        edtThan = (EditText) findViewById(R.id.EditTextThan);
+        edtThan_ = (EditText) findViewById(R.id.EditTextThan_);
+        edtDom = (EditText) findViewById(R.id.EditTextDom);
+        edtDom_ = (EditText) findViewById(R.id.EditTextDom_);
+        edtVi = (EditText) findViewById(R.id.EditTextVi);
+        edtVi_ = (EditText) findViewById(R.id.EditTextVi_);
+        edtCan = (EditText) findViewById(R.id.EditTextCan);
+        edtCan_ = (EditText) findViewById(R.id.EditTextCan_);
+        edtTi = (EditText) findViewById(R.id.EditTextTi);
+        edtTi_ = (EditText) findViewById(R.id.EditTextTi_);
+
+        btnClose = (Button) findViewById(R.id.btnClose);
     }
 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.phamquan.maydonhietdo">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -82,15 +84,6 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".hoso.ListResume"
-            android:label="@string/title_activity_list_resume"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.phamquan.maydonhietdo.MainActivity" />
-        </activity>
-        <activity
             android:name=".hoso.HoSoBenhNhan"
             android:label="@string/title_activity_ho_so_benh_nhan"
             android:parentActivityName=".hoso.ListResume"
@@ -98,6 +91,24 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".hoso.ListResume" />
+        </activity>
+        <activity
+            android:name=".hoso.CompareTwoChart"
+            android:label="@string/title_activity_compare_two_chart"
+            android:parentActivityName=".hoso.HoSoBenhNhan"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.phamquan.maydonhietdo.hoso.HoSoBenhNhan" />
+        </activity>
+        <activity
+            android:name=".hoso.ListResume"
+            android:label="@string/title_activity_list_resume"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
     </application>
 

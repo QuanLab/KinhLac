@@ -6,7 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 
 import com.phamquan.maydonhietdo.R;
 
@@ -28,15 +27,16 @@ public class AboutUs extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    public void onClick(View view){
 
-        Button btnAbout = (Button) findViewById(R.id.btnAbout);
-
-        btnAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        switch (view.getId()){
+            case R.id.btnAboutUs:
                 finish();
-            }
-        });
+                break;
+            default:
+                finish();
+        }
     }
 }

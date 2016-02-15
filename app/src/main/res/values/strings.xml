@@ -26,6 +26,9 @@
     <string name="xem_bieu_do">Xem biểu đồ</string>
     <string name="bieu_do_mot_cot">Một cột</string>
     <string name="bieu_do_hai_cot">Hai cột</string>
+    <string name="bat_dau_do">Bắt đầu đo</string>
+    <string name="do_moi">Đo mới</string>
+    <string name="so_sanh">So sánh</string>
     <string name="xong">Xong</string>
     <string name="about_us">Giới thiệu đang được cập nhật, sẽ hoàn thành trong thời gian sớm nhất</string>
     <string name="guideline">Hướng dẫn sử dụng đang được cập nhật. Sẽ hoàn thành trong thời gian sớm nhất</string>
@@ -40,5 +43,7 @@
     <string name="title_activity_dong_benh_nhan">DongBenhNhan</string>
     <string name="title_activity_ho_so_benh_nhan">Hồ sơ</string>
     <string name="title_activity_dong_lan_do">DongLanDo</string>
+    <string name="title_activity_compare_two_chart">Biểu đồ so sánh</string>
+    <string name="title_activity_screen_shot">ScreenShot</string>
 
 </resources>

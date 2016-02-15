@@ -4,20 +4,25 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import java.util.ArrayList;
 import android.widget.AdapterView.*;
-
-import com.phamquan.maydonhietdo.BenhNhan;
+import com.phamquan.maydonhietdo.database.BenhNhan;
+import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
 import com.phamquan.maydonhietdo.R;
+import com.phamquan.maydonhietdo.database.LanKham;
 
+//Danh sach ho so benh nhan
 
 public class ListResume extends AppCompatActivity {
 
     private ListView listViewResume;
+    private BenhNhanDataSource datasource;
     ArrayList<BenhNhan> mangBenhNhan;
+    ArrayList<String> thongTin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +36,18 @@ public class ListResume extends AppCompatActivity {
 
         listViewResume = (ListView) findViewById(R.id.listViewResume);
 
-        mangBenhNhan = new ArrayList<>();
-        mangBenhNhan.add(new BenhNhan("Pham Van Quan", 1995));
-        mangBenhNhan.add(new BenhNhan("Vu Thanh Huan", 1995));
-        mangBenhNhan.add(new BenhNhan("Tram Van Tuan", 1995));
-        mangBenhNhan.add(new BenhNhan("Hoang Tuan Anh", 1995));
+        datasource = new BenhNhanDataSource(this);
+        datasource.open();
+        mangBenhNhan = datasource.getAllBenhNhan();
 
-        ListAdapter adapter = new ListAdapter(this, R.layout.activity_dong_benh_nhan, mangBenhNhan );
+        try{
+            datasource.insertLanKham(new LanKham());
+            Log.e(this.getClass().toString(), "Chen lan kham thanh cong");
+        }catch (Exception e){
+            Log.e(this.getClass().toString(), "" + e);
+        }
+
+        ListAdapter adapter = new ListAdapter(this, R.layout.activity_dong_benh_nhan_mau, mangBenhNhan );
         listViewResume.setAdapter(adapter);
         listViewResume.setOnItemClickListener(new ListClickHandler());
     }
@@ -46,10 +56,18 @@ public class ListResume extends AppCompatActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
-            // TODO Auto-generated method stub
-            String hoTen = mangBenhNhan.get(position).getHoTen();
+
+            thongTin = new ArrayList<>();
+            BenhNhan benhNhan = mangBenhNhan.get(position);
+
             Intent intent = new Intent(ListResume.this, HoSoBenhNhan.class);
-            intent.putExtra("hoTen", hoTen );
+
+            intent.putExtra("idBenhNhan" , String.valueOf(benhNhan.getId()));
+            intent.putExtra("hoTen" , benhNhan.getHoTen());
+            intent.putExtra("namSinh" , benhNhan.getNamSinh());
+            intent.putExtra("diaChi" , benhNhan.getDiaChi());
+            intent.putExtra("soDienThoai" , benhNhan.getSoDienThoai());
+
             startActivity(intent);
         }
     }

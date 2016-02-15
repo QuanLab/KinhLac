@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+
 import com.phamquan.maydonhietdo.R;
 
 public class Guideline extends AppCompatActivity {
@@ -29,4 +30,14 @@ public class Guideline extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    public void onClick(View view){
+
+        switch (view.getId()){
+            case R.id.btnXong:
+                finish();
+                break;
+            default:
+                finish();
+        }
+    }
 }

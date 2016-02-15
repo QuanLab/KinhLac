@@ -8,10 +8,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/xong"
-        android:onClick="onClick"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btnHaiCot"
-        android:layout_toEndOf="@+id/btnHaiCot" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnHaiCot"
@@ -20,8 +18,7 @@
         android:text="@string/bieu_do_hai_cot"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:onClick="onClick" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/btnMotCot"
@@ -30,8 +27,7 @@
         android:text="@string/bieu_do_mot_cot"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:onClick="onClick" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,7 +60,7 @@
         android:layout_alignParentStart="true" />
 
     <LinearLayout
-        android:id="@+id/chart"
+        android:id="@+id/chartCompare"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textViewTrieuChung"
@@ -73,15 +69,5 @@
         tools:ignore="Orientation">
 
     </LinearLayout>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lưu ảnh"
-        android:id="@+id/btnSaveImage"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/btnMotCot"
-        android:layout_toStartOf="@+id/btnMotCot"
-        android:onClick="onClick" />
 
 </RelativeLayout>

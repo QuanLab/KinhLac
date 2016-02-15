@@ -7,6 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.phamquan.maydonhietdo.DongBenhNhan">
 
-    <include layout="@layout/content_dong_benh_nhan" />
+    <include layout="@layout/content_dong_benh_nhan_mau" />
 
 </android.support.design.widget.CoordinatorLayout>
