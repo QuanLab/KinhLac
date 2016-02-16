@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/trieu_chung"
-        android:id="@+id/textViewTrieuChung"
+        android:id="@+id/textViewSoDienThoai"
         android:layout_below="@+id/textViewDiaChi"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -67,7 +67,7 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textViewTrieuChung"
+        android:layout_below="@+id/textViewSoDienThoai"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         tools:ignore="Orientation">

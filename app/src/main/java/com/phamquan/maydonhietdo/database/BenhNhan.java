@@ -12,11 +12,22 @@ public class BenhNhan {
     private String soDienThoai;
     private ArrayList<LanKham> danhSachLanKham;
 
+    public BenhNhan(int id, String hoTen, String namSinh, String diaChi, String soDienThoai) {
+        this.id = id;
+        this.hoTen = hoTen;
+        this.namSinh = namSinh;
+        this.diaChi = diaChi;
+        this.soDienThoai = soDienThoai;
+    }
     public BenhNhan(String hoTen, String namSinh, String diaChi, String soDienThoai) {
         this.hoTen = hoTen;
         this.namSinh = namSinh;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
+    }
+
+    public BenhNhan(int id){
+        this.id = id;
     }
 
     public BenhNhan(){}

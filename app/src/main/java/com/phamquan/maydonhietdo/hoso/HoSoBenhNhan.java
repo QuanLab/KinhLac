@@ -12,7 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.phamquan.maydonhietdo.R;
+import com.phamquan.maydonhietdo.database.BenhNhan;
 import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
+import com.phamquan.maydonhietdo.database.DBAintergration;
 import com.phamquan.maydonhietdo.database.LanKham;
 import com.phamquan.maydonhietdo.domoi.PersonInfo;
 
@@ -27,8 +29,7 @@ public class HoSoBenhNhan extends AppCompatActivity {
     private EditText edtLanX, edtLanY;
     private Button btnSoSanh, btnDoMoi;
     private BenhNhanDataSource datasource;
-    private static String hoTen, namSinh, diaChi, soDienThoai;
-    private static int idBenhNhan;
+    private static String hoTen, namSinh, diaChi, soDienThoai, idBenhNhan;
 
     ArrayList<String> thongTin;
 
@@ -39,12 +40,12 @@ public class HoSoBenhNhan extends AppCompatActivity {
         setContentView(R.layout.activity_ho_so_benh_nhan);
 
         reflexHoSo();
+
         thongTin = new ArrayList<>();
 
         Bundle bundle = getIntent().getExtras();
 
-        String _id = bundle.getString("idBenhNhan");
-        idBenhNhan = Integer.parseInt(_id);
+        idBenhNhan = bundle.getString("idBenhNhan");
         hoTen = bundle.getString("hoTen");
         namSinh = bundle.getString("namSinh");
         diaChi = bundle.getString("diaChi");
@@ -58,12 +59,15 @@ public class HoSoBenhNhan extends AppCompatActivity {
         datasource = new BenhNhanDataSource(this);
         datasource.open();
 
-        try{
-            mangLanKham = datasource.getAllLanKham();
-            Log.e(this.getClass().toString(), "lay tat ca lan kham thanh cong");
-        } catch (Exception e){
-            Log.e(this.getClass().toString(), "lay tat ca lan kham bi loi" + e);
+        try {
+            mangLanKham = datasource.getAllLanKham(new BenhNhan(Integer.parseInt(idBenhNhan)));
+            Log.e("HoSoBenhNhan:", "Lay tat ca lan kham thanh cong");
+        } catch (Exception e) {
+            Log.e("HoSoBenhNhan:", "Lay tat ca lan kham bi loi" + e);
         }
+
+        ListAdapterLanKham adapter = new ListAdapterLanKham(this, R.layout.activity_dong_benh_nhan_mau, mangLanKham);
+        lv_lan_kham.setAdapter(adapter);
 
         btnSoSanh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +108,15 @@ public class HoSoBenhNhan extends AppCompatActivity {
 
             if ((lanX >= 0) && (lanY >= 0) && (lanX <= size) && (lanY <= size) && (lanX != lanY)) {
 
+                LanKham lanKhamX = mangLanKham.get(lanX);
+                LanKham lanKhamY = mangLanKham.get(lanY);
+                float[] solieu1 = DBAintergration.stringToFloat(lanKhamX.getSoLieu());
+                float[] solieu2 = DBAintergration.stringToFloat(lanKhamY.getSoLieu());
+
                 Intent intent2 = new Intent(this, CompareTwoChart.class);
+                intent2.putExtra("lanX", solieu1 );
+                intent2.putExtra("lanY", solieu2 );
+                intent2.putExtra("thongTin", thongTin);
                 startActivity(intent2);
 
             } else {
@@ -116,6 +128,8 @@ public class HoSoBenhNhan extends AppCompatActivity {
     }
 
     private void reflexHoSo() {
+
+        lv_lan_kham = (ListView) findViewById(R.id.listViewHoSoBenhNhan);
 
         btnSoSanh = (Button) findViewById(R.id.btn_so_sanh);
         btnDoMoi = (Button) findViewById(R.id.btn_do_moi);

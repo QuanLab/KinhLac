@@ -12,7 +12,10 @@ import android.graphics.Paint.Align;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,16 +26,14 @@ import java.util.ArrayList;
 public class CompareTwoChart extends AppCompatActivity {
 
     private View mChart;
+    private Button btnSoSanh;
     private String[] mMonth = new String[]{
             "Tì", "Can", "Vị", "Đởm", "Thận", "Bàng quang",
             "Phế", "Đại trường", "Tâm bào", "Tam tiêu", "Tâm", "Tiểu trường"
     };
 
-    private String lanx, lany;
-
     private float[] benTrai;
     private float[] benPhai;
-    private float[] trungBinh;
     private TextView tvHoTen, tvDiaChi, tvTrieuChung;
     private ArrayList<String> thongTin;
 
@@ -44,19 +45,33 @@ public class CompareTwoChart extends AppCompatActivity {
 
         tvHoTen = (TextView) findViewById(R.id.textViewHoTen);
         tvDiaChi = (TextView) findViewById(R.id.textViewDiaChi);
-        tvTrieuChung = (TextView) findViewById(R.id.textViewTrieuChung);
+        tvTrieuChung = (TextView) findViewById(R.id.textViewSoDienThoai);
+        btnSoSanh = (Button) findViewById(R.id.btn_so_sanh_xong);
 
         Bundle bundle = getIntent().getExtras();
 
         if(bundle!=null) {
-            benTrai = bundle.getFloatArray("benTrai");
-            benPhai = bundle.getFloatArray("benPhai");
-            trungBinh = bundle.getFloatArray("trungBinh");
+            benTrai = bundle.getFloatArray("lanX");
+            benPhai = bundle.getFloatArray("lanY");
             thongTin = bundle.getStringArrayList("thongTin");
         }
+
+        btnSoSanh.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                try {
+                    openCompareTwoChart();
+                }catch (Exception e){
+                    Log.e("Draw chart error: ", "Loi ve bieu do");
+                }
+            }
+        });
+
     }
 
-    private void openCompareTwoChart(int lan1, int lan2) {
+
+    private void openCompareTwoChart() {
+
         setChartInfo();
         int[] x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         float [] income = benTrai;
@@ -88,7 +103,7 @@ public class CompareTwoChart extends AppCompatActivity {
         tayPhaiRenderer.setColor(Color.GREEN);
         tayPhaiRenderer.setFillPoints(true);
         tayPhaiRenderer.setLineWidth(2);
-//        tayPhaiRenderer.setDisplayChartValues(true);
+        //tayPhaiRenderer.setDisplayChartValues(true);
 
         // Creating a XYMultipleSeriesRenderer to customize the whole chart
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
@@ -98,10 +113,7 @@ public class CompareTwoChart extends AppCompatActivity {
         multiRenderer.setXTitle("Các bộ phận");
         multiRenderer.setYTitle("Phần trăm");
 
-        /***
-         * Customizing graphs
-         */
-//setting text size of the title
+        //setting text size of the title
         multiRenderer.setChartTitleTextSize(28);
         //setting text size of the axis title
         multiRenderer.setAxisTitleTextSize(24);

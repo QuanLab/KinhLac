@@ -40,13 +40,6 @@ public class ListResume extends AppCompatActivity {
         datasource.open();
         mangBenhNhan = datasource.getAllBenhNhan();
 
-        try{
-            datasource.insertLanKham(new LanKham());
-            Log.e(this.getClass().toString(), "Chen lan kham thanh cong");
-        }catch (Exception e){
-            Log.e(this.getClass().toString(), "" + e);
-        }
-
         ListAdapter adapter = new ListAdapter(this, R.layout.activity_dong_benh_nhan_mau, mangBenhNhan );
         listViewResume.setAdapter(adapter);
         listViewResume.setOnItemClickListener(new ListClickHandler());
@@ -62,7 +55,7 @@ public class ListResume extends AppCompatActivity {
 
             Intent intent = new Intent(ListResume.this, HoSoBenhNhan.class);
 
-            intent.putExtra("idBenhNhan" , String.valueOf(benhNhan.getId()));
+            intent.putExtra("idBenhNhan" , String.valueOf(position));
             intent.putExtra("hoTen" , benhNhan.getHoTen());
             intent.putExtra("namSinh" , benhNhan.getNamSinh());
             intent.putExtra("diaChi" , benhNhan.getDiaChi());

@@ -16,7 +16,6 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,7 +25,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Chart extends AppCompatActivity {
 
@@ -52,11 +54,12 @@ public class Chart extends AppCompatActivity {
 
         tvHoTen = (TextView) findViewById(R.id.textViewHoTen);
         tvDiaChi = (TextView) findViewById(R.id.textViewDiaChi);
-        tvTrieuChung = (TextView) findViewById(R.id.textViewTrieuChung);
+        tvTrieuChung = (TextView) findViewById(R.id.textViewSoDienThoai);
 
         Bundle bundle = getIntent().getExtras();
 
         if(bundle!=null) {
+
             benTrai = bundle.getFloatArray("benTrai");
             benPhai = bundle.getFloatArray("benPhai");
             trungBinh = bundle.getFloatArray("trungBinh");
@@ -126,9 +129,6 @@ public class Chart extends AppCompatActivity {
         multiRenderer.setXTitle("Các bộ phận");
         multiRenderer.setYTitle("Phần trăm");
 
-        /***
-         * Customizing graphs
-         */
 //setting text size of the title
         multiRenderer.setChartTitleTextSize(28);
         //setting text size of the axis title
@@ -334,22 +334,25 @@ public class Chart extends AppCompatActivity {
 
     public void saveBitmap(Bitmap bitmap) {
 
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        Calendar cal = Calendar.getInstance();
+        String strDateTime = dateFormat.format(cal.getTime());
 
-        String tenAnh = thongTin.get(5);
-        StringBuffer s = new StringBuffer();
+//        String tenAnh = thongTin.get(5);
+//        StringBuffer s = new StringBuffer();
+//
+//        for(int i = 0; i<tenAnh.length(); i++){
+//            char c = tenAnh.charAt(i);
+//            if(c!='/'&&c!=':'&&c!=' '){
+//                s.append(c);
+//            } else{
+//                s.append('-');
+//            }
+//        }
 
-        for(int i = 0; i<tenAnh.length(); i++){
-            char c = tenAnh.charAt(i);
-            if(c!='/'&&c!=':'&&c!=' '){
-                s.append(c);
-            } else{
-                s.append('-');
-            }
-        }
+//        String imageName = new String(s);
 
-        String imageName = new String(s);
-
-        File imagePath = new File(Environment.getExternalStorageDirectory() + "/" + imageName +".png");
+        File imagePath = new File(Environment.getExternalStorageDirectory() + "/" + strDateTime +".png");
         Log.e(this.getClass().toString(),"" + imagePath.getAbsolutePath() );
         FileOutputStream fos;
 

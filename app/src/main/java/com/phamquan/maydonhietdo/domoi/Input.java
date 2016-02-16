@@ -3,6 +3,7 @@ package com.phamquan.maydonhietdo.domoi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ public class Input extends AppCompatActivity {
 
     private ArrayList<String> thongTin;
     private BenhNhanDataSource dataSource;
+    private static int idBenhNhan = -1;
 
     private EditText edtTieuTruong, edtTieuTruong_,
             edtTam, edtTam_,
@@ -265,15 +267,30 @@ public class Input extends AppCompatActivity {
         dataSource.open();
 
         if(!DBAintergration.isDaCoHoSo()){
-
             dataSource.insertBenhNhan(new BenhNhan(thongTin.get(0), thongTin.get(1), thongTin.get(2), thongTin.get(3)));
+            idBenhNhan = dataSource.countBenhNhan();
         }
 
         String soLieu = DBAintergration.floatToString(phanTramTrungBinh);
+
         String trieuChung = thongTin.get(4);
         String ngayDo = thongTin.get(5);
-//
-//        dataSource.insertLanKham(new LanKham(1 , trieuChung , soLieu, ngayDo));
+
+        if(idBenhNhan <0){
+            String idString = thongTin.get(6);
+            idBenhNhan = Integer.parseInt(idString);
+        }
+
+        LanKham lanKham = new LanKham(trieuChung, soLieu, ngayDo);
+        lanKham.setBenhNhan(new BenhNhan(idBenhNhan));
+
+        Log.e("Input: ", "ID benh nhan: " + lanKham.getBenhNhan().getId());
+        Log.e("Input: ", "Trieu chung: " + lanKham.getTrieuChung());
+        Log.e("Input: ", "Ngay do: "+ lanKham.getSoLieu());
+        Log.e("Input: ", "Ngay do: "+ lanKham.getNgayDo());
+
+        dataSource.insertLanKham(lanKham);
+        Log.e("Input: ", "Chen them lan kham thanh cong");
 
     }
 

@@ -13,9 +13,8 @@ public class LanKham {
     private String soLieu;
     private Image image;
 
-    public LanKham(int idBenhNhan, String trieuChung, String soLieu, String ngayDo){
+    public LanKham(String trieuChung, String soLieu, String ngayDo){
 
-        this.getBenhNhan().setId(idBenhNhan);
         this.trieuChung = trieuChung;
         this.soLieu = soLieu;
         this.ngayDo = ngayDo;
@@ -64,4 +63,5 @@ public class LanKham {
     public void setSoLieu(String soLieu) {
         this.soLieu = soLieu;
     }
+
 }

@@ -37,7 +37,7 @@ public class PersonInfo extends AppCompatActivity {
 
             DBAintergration.setDaCoHoSo(true);
 
-//            idBenhNhan = bundle.getString("idBenhNhan");
+            idBenhNhan = bundle.getString("idBenhNhan");
             hoTen = bundle.getString("hoTen");
             namSinh = bundle.getString("namSinh");
             diaChi = bundle.getString("diaChi");
@@ -52,7 +52,7 @@ public class PersonInfo extends AppCompatActivity {
             DBAintergration.setDaCoHoSo(false);
         }
 
-        DateFormat dateFormat = new SimpleDateFormat("ss:mm:HH dd/MM/yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
         String strDateTime = dateFormat.format(cal.getTime());
 
@@ -82,6 +82,7 @@ public class PersonInfo extends AppCompatActivity {
         thongTin.add(soDienThoai);
         thongTin.add(trieuChung);
         thongTin.add(ngayDo);
+        thongTin.add(idBenhNhan);
 
         Intent intent = new Intent(this, Input.class);
         intent.putExtra("thongTin", thongTin);
