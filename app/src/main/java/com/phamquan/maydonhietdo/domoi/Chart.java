@@ -54,7 +54,7 @@ public class Chart extends AppCompatActivity {
 
         tvHoTen = (TextView) findViewById(R.id.textViewHoTen);
         tvDiaChi = (TextView) findViewById(R.id.textViewDiaChi);
-        tvTrieuChung = (TextView) findViewById(R.id.textViewSoDienThoai);
+        tvTrieuChung = (TextView) findViewById(R.id.textViewTrieuChung);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -83,7 +83,6 @@ public class Chart extends AppCompatActivity {
             case R.id.btnSaveImage:
                 saveImage();
                 break;
-
         }
     }
 
@@ -320,6 +319,7 @@ public class Chart extends AppCompatActivity {
     }
 
     public void setChartInfo(){
+
         tvHoTen.setText((String)thongTin.get(0));
         tvDiaChi.setText((String)thongTin.get(1));
         tvTrieuChung.setText((String)thongTin.get(4));
@@ -338,19 +338,6 @@ public class Chart extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         String strDateTime = dateFormat.format(cal.getTime());
 
-//        String tenAnh = thongTin.get(5);
-//        StringBuffer s = new StringBuffer();
-//
-//        for(int i = 0; i<tenAnh.length(); i++){
-//            char c = tenAnh.charAt(i);
-//            if(c!='/'&&c!=':'&&c!=' '){
-//                s.append(c);
-//            } else{
-//                s.append('-');
-//            }
-//        }
-
-//        String imageName = new String(s);
 
         File imagePath = new File(Environment.getExternalStorageDirectory() + "/" + strDateTime +".png");
         Log.e(this.getClass().toString(),"" + imagePath.getAbsolutePath() );

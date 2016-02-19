@@ -10,8 +10,7 @@
         android:text="@string/xong"
         android:onClick="onClick"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btnHaiCot"
-        android:layout_toEndOf="@+id/btnHaiCot" />
+        android:layout_toRightOf="@+id/btnHaiCot" />
 
     <Button
         android:id="@+id/btnHaiCot"
@@ -58,7 +57,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/trieu_chung"
-        android:id="@+id/textViewSoDienThoai"
+        android:id="@+id/textViewTrieuChung"
         android:layout_below="@+id/textViewDiaChi"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -67,7 +66,7 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textViewSoDienThoai"
+        android:layout_below="@+id/textViewTrieuChung"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         tools:ignore="Orientation">
@@ -77,11 +76,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lưu ảnh"
+        android:text="@string/luu_anh"
         android:id="@+id/btnSaveImage"
+        android:onClick="onClick"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/btnMotCot"
-        android:layout_toStartOf="@+id/btnMotCot"
-        android:onClick="onClick" />
+        android:layout_toStartOf="@+id/btnMotCot" />
 
 </RelativeLayout>

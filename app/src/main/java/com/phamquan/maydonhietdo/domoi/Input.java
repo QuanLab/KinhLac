@@ -284,14 +284,7 @@ public class Input extends AppCompatActivity {
         LanKham lanKham = new LanKham(trieuChung, soLieu, ngayDo);
         lanKham.setBenhNhan(new BenhNhan(idBenhNhan));
 
-        Log.e("Input: ", "ID benh nhan: " + lanKham.getBenhNhan().getId());
-        Log.e("Input: ", "Trieu chung: " + lanKham.getTrieuChung());
-        Log.e("Input: ", "Ngay do: "+ lanKham.getSoLieu());
-        Log.e("Input: ", "Ngay do: "+ lanKham.getNgayDo());
-
         dataSource.insertLanKham(lanKham);
-        Log.e("Input: ", "Chen them lan kham thanh cong");
-
     }
 
     public void showE() {

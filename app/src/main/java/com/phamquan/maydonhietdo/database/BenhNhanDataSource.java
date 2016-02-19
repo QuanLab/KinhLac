@@ -113,7 +113,7 @@ public class BenhNhanDataSource {
         Log.e("getAllLanKham: ", "Menh de where: " + whereArgs);
 
         try {
-            cursor = database.query(DatabaseHelper.TABLE_KHAM_BENH, allColunmLanKham, null, null, null, null, null);
+            cursor = database.query(DatabaseHelper.TABLE_KHAM_BENH, allColunmLanKham, whereArgs, null, null, null, null);
             Log.e("getAllLanKham:", "Lay thanh cong du lieu tu bang lan kham");
 
         } catch (Exception e) {

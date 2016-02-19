@@ -55,7 +55,7 @@ public class ListResume extends AppCompatActivity {
 
             Intent intent = new Intent(ListResume.this, HoSoBenhNhan.class);
 
-            intent.putExtra("idBenhNhan" , String.valueOf(position));
+            intent.putExtra("idBenhNhan" , String.valueOf(position +1));
             intent.putExtra("hoTen" , benhNhan.getHoTen());
             intent.putExtra("namSinh" , benhNhan.getNamSinh());
             intent.putExtra("diaChi" , benhNhan.getDiaChi());

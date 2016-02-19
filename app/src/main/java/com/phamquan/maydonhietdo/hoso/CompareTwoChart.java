@@ -45,8 +45,6 @@ public class CompareTwoChart extends AppCompatActivity {
 
         tvHoTen = (TextView) findViewById(R.id.textViewHoTen);
         tvDiaChi = (TextView) findViewById(R.id.textViewDiaChi);
-        tvTrieuChung = (TextView) findViewById(R.id.textViewSoDienThoai);
-        btnSoSanh = (Button) findViewById(R.id.btn_so_sanh_xong);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -189,6 +187,7 @@ public class CompareTwoChart extends AppCompatActivity {
     }
 
     public void setChartInfo(){
+
         tvHoTen.setText((String)thongTin.get(0));
         tvDiaChi.setText((String)thongTin.get(1));
         tvTrieuChung.setText((String)thongTin.get(4));
