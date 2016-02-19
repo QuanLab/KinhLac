@@ -46,5 +46,6 @@
     <string name="title_activity_dong_lan_do">DongLanDo</string>
     <string name="title_activity_compare_two_chart">Biểu đồ so sánh</string>
     <string name="title_activity_screen_shot">ScreenShot</string>
+    <string name="title_activity_compare_chart">Biểu đồ so sánh</string>
 
 </resources>

@@ -1,82 +1,99 @@
 package com.phamquan.maydonhietdo.hoso;
 
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.phamquan.maydonhietdo.R;
+import com.phamquan.maydonhietdo.database.DBAintergration;
+
 import org.achartengine.ChartFactory;
-import org.achartengine.chart.BarChart.Type;
+import org.achartengine.chart.BarChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
-import android.graphics.Color;
-import android.graphics.Paint.Align;
-import android.graphics.Typeface;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.text.Layout;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.phamquan.maydonhietdo.R;
-
 import java.util.ArrayList;
 
-public class CompareTwoChart extends AppCompatActivity {
+public class CompareChart extends AppCompatActivity {
 
-    private View mChart;
-    private Button btnSoSanh;
+    private View chartCompare;
+    private TextView tvHoTen, tvNamSinh, tvDiaChi, tvSoDienThoai;
+    private ArrayList<String> thongTin;
+    String soLieuX, soLieuY;
+
     private String[] mMonth = new String[]{
             "Tì", "Can", "Vị", "Đởm", "Thận", "Bàng quang",
             "Phế", "Đại trường", "Tâm bào", "Tam tiêu", "Tâm", "Tiểu trường"
     };
 
-    private float[] benTrai;
-    private float[] benPhai;
-    private TextView tvHoTen, tvDiaChi, tvTrieuChung;
-    private ArrayList<String> thongTin;
+    private static float[] benTrai;
+    private static float[] benPhai;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chart);
+        setContentView(R.layout.activity_compare_chart);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        tvHoTen = (TextView) findViewById(R.id.textViewHoTen);
-        tvDiaChi = (TextView) findViewById(R.id.textViewDiaChi);
-
-        Bundle bundle = getIntent().getExtras();
-
-        if(bundle!=null) {
-            benTrai = bundle.getFloatArray("lanX");
-            benPhai = bundle.getFloatArray("lanY");
-            thongTin = bundle.getStringArrayList("thongTin");
-        }
-
-        btnSoSanh.setOnClickListener(new View.OnClickListener(){
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                try {
-                    openCompareTwoChart();
-                }catch (Exception e){
-                    Log.e("Draw chart error: ", "Loi ve bieu do");
-                }
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
+        reflex();
+        thongTin = new ArrayList<>();
+        benTrai = new float[12];
+        benPhai = new float[12];
+
+        Bundle bundle = getIntent().getExtras();
+
+        if(bundle!=null){
+
+            thongTin = bundle.getStringArrayList("thongTin");
+            soLieuX = bundle.getString("soLieuX");
+            soLieuY = bundle.getString("soLieuY");
+        }
+
+        try{
+            benTrai = DBAintergration.stringToFloat(soLieuX);
+            benPhai = DBAintergration.stringToFloat(soLieuY);
+        }catch (Exception e){
+            Log.e("stringToFloat", "Loi" + e);
+        }
+
+        if(!thongTin.isEmpty()){
+            setChartInfo();
+        }
+
+        openChart();
     }
 
 
-    private void openCompareTwoChart() {
+    private void openChart() {
 
-        setChartInfo();
         int[] x = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         float [] income = benTrai;
         float [] expense = benPhai;
 
-        XYSeries incomeSeries = new XYSeries("Trai");
-        XYSeries expenseSeries = new XYSeries("Phai");
+        XYSeries incomeSeries = new XYSeries("Trái");
+        XYSeries expenseSeries = new XYSeries("Phải");
 
         for (int i = 0; i < x.length; i++) {
             incomeSeries.add(i, income[i]);
@@ -101,7 +118,7 @@ public class CompareTwoChart extends AppCompatActivity {
         tayPhaiRenderer.setColor(Color.GREEN);
         tayPhaiRenderer.setFillPoints(true);
         tayPhaiRenderer.setLineWidth(2);
-        //tayPhaiRenderer.setDisplayChartValues(true);
+//        tayPhaiRenderer.setDisplayChartValues(true);
 
         // Creating a XYMultipleSeriesRenderer to customize the whole chart
         XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
@@ -111,7 +128,7 @@ public class CompareTwoChart extends AppCompatActivity {
         multiRenderer.setXTitle("Các bộ phận");
         multiRenderer.setYTitle("Phần trăm");
 
-        //setting text size of the title
+//setting text size of the title
         multiRenderer.setChartTitleTextSize(28);
         //setting text size of the axis title
         multiRenderer.setAxisTitleTextSize(24);
@@ -144,9 +161,9 @@ public class CompareTwoChart extends AppCompatActivity {
         //setting to set legend height of the graph
         multiRenderer.setLegendHeight(30);
         //setting x axis label align
-        multiRenderer.setXLabelsAlign(Align.CENTER);
+        multiRenderer.setXLabelsAlign(Paint.Align.CENTER);
         //setting y axis label to align
-        multiRenderer.setYLabelsAlign(Align.LEFT);
+        multiRenderer.setYLabelsAlign(Paint.Align.LEFT);
         //setting text style
         multiRenderer.setTextTypeface("sans_serif", Typeface.NORMAL);
         //setting no of values to display in y axis
@@ -177,20 +194,30 @@ public class CompareTwoChart extends AppCompatActivity {
         multiRenderer.addSeriesRenderer(tayPhaiRenderer);
 
         //this part is used to display graph on the xml
-        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart);
+        LinearLayout chartContainer = (LinearLayout) findViewById(R.id.chart_compare);
         //remove any views before u paint the chart
         chartContainer.removeAllViews();
         //drawing bar chart
-        mChart = ChartFactory.getBarChartView(CompareTwoChart.this, dataset, multiRenderer, Type.DEFAULT);
+        chartCompare = ChartFactory.getBarChartView(CompareChart.this, dataset, multiRenderer, BarChart.Type.DEFAULT);
         //adding the view to the linearlayout
-        chartContainer.addView(mChart);
+        chartContainer.addView(chartCompare);
     }
 
     public void setChartInfo(){
 
-        tvHoTen.setText((String)thongTin.get(0));
-        tvDiaChi.setText((String)thongTin.get(1));
-        tvTrieuChung.setText((String)thongTin.get(4));
+        tvHoTen.setText(thongTin.get(0));
+        tvNamSinh.setText(thongTin.get(1));
+        tvDiaChi.setText(thongTin.get(2));
+        tvSoDienThoai.setText(thongTin.get(3));
     }
-}
 
+
+    private void reflex(){
+
+        tvHoTen = (TextView) findViewById(R.id.tv_ho_ten);
+        tvNamSinh = (TextView) findViewById(R.id.tv_nam_sinh);
+        tvDiaChi = (TextView) findViewById(R.id.tv_dia_chi);
+        tvSoDienThoai = (TextView) findViewById(R.id.tv_so_dien_thoai);
+    }
+
+}

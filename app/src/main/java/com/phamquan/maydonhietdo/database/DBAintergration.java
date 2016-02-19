@@ -21,7 +21,7 @@ public class DBAintergration {
     public static float[] stringToFloat(String s) {
 
         int j = 0;
-        float[] arr = new float[5];
+        float[] arr = new float[12];
         StringBuffer sb = new StringBuffer();
 
         for(int i = 0; i < s.length(); i++){

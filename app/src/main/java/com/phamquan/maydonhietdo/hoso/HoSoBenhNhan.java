@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.phamquan.maydonhietdo.R;
 import com.phamquan.maydonhietdo.database.BenhNhan;
 import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
-import com.phamquan.maydonhietdo.database.DBAintergration;
 import com.phamquan.maydonhietdo.database.LanKham;
 import com.phamquan.maydonhietdo.domoi.PersonInfo;
 
@@ -50,6 +49,11 @@ public class HoSoBenhNhan extends AppCompatActivity {
         namSinh = bundle.getString("namSinh");
         diaChi = bundle.getString("diaChi");
         soDienThoai = bundle.getString("soDienThoai");
+
+        thongTin.add(hoTen);
+        thongTin.add(namSinh);
+        thongTin.add(diaChi);
+        thongTin.add(soDienThoai);
 
         tvHoTen.setText(hoTen);
         tvNamSinh.setText(namSinh);
@@ -95,36 +99,46 @@ public class HoSoBenhNhan extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void soSanh() {
+    public boolean soSanh() {
 
         int size = mangLanKham.size();
+        Log.e("Kich thuoc: ", "" + size);
 
         if (size >= 2) {
 
             String chuoiLanX = edtLanX.getText().toString();
             String chuoiLanY = edtLanY.getText().toString();
-            int lanX = Integer.parseInt(chuoiLanX);
-            int lanY = Integer.parseInt(chuoiLanY);
 
-            if ((lanX >= 0) && (lanY >= 0) && (lanX <= size) && (lanY <= size) && (lanX != lanY)) {
+            if(chuoiLanX.isEmpty()||chuoiLanY.isEmpty()){
+                Toast.makeText(this, "Không nhập số rồi ông ơi!", Toast.LENGTH_LONG).show();
+                return false;
+            }
 
-                LanKham lanKhamX = mangLanKham.get(lanX);
-                LanKham lanKhamY = mangLanKham.get(lanY);
-                float[] solieu1 = DBAintergration.stringToFloat(lanKhamX.getSoLieu());
-                float[] solieu2 = DBAintergration.stringToFloat(lanKhamY.getSoLieu());
+            int lanThuX = Integer.parseInt(chuoiLanX);
+            int lanThuY = Integer.parseInt(chuoiLanY);
 
-                Intent intent2 = new Intent(this, CompareTwoChart.class);
-                intent2.putExtra("lanX", solieu1 );
-                intent2.putExtra("lanY", solieu2 );
-                intent2.putExtra("thongTin", thongTin);
-                startActivity(intent2);
+            if ((lanThuX >0) && (lanThuY >0) && (lanThuX <= size) && (lanThuY <= size) && (lanThuX != lanThuY)) {
+
+                LanKham lanKhamX = mangLanKham.get(lanThuX-1);
+                LanKham lanKhamY = mangLanKham.get(lanThuY-1);
+                String soLieuX = lanKhamX.getSoLieu();
+                String soLieuY = lanKhamY.getSoLieu();
+
+                Intent compareChart = new Intent(this, CompareChart.class);
+                compareChart.putExtra("soLieuX", soLieuX );
+                compareChart.putExtra("soLieuY", soLieuY );
+                compareChart.putExtra("thongTin", thongTin);
+                startActivity(compareChart);
 
             } else {
                 Toast.makeText(this, "Nhập số chuẩn đi ông bạn!", Toast.LENGTH_LONG).show();
             }
+        } else if(size==0){
+            Toast.makeText(this, "Có lần đo nào đâu mà so sánh!", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Có lần đo nào đâu mà so sánh", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Có một lần đo so sánh thế nào hả ông lão!", Toast.LENGTH_LONG).show();
         }
+        return true;
     }
 
     private void reflexHoSo() {

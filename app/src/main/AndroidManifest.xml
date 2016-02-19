@@ -84,15 +84,6 @@
                 android:value=".hoso.ListResume" />
         </activity>
         <activity
-            android:name=".hoso.CompareTwoChart"
-            android:label="@string/title_activity_compare_two_chart"
-            android:parentActivityName=".hoso.HoSoBenhNhan"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.phamquan.maydonhietdo.hoso.HoSoBenhNhan" />
-        </activity>
-        <activity
             android:name=".hoso.ListResume"
             android:label="@string/title_activity_list_resume"
             android:parentActivityName=".MainActivity"
@@ -110,6 +101,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.phamquan.maydonhietdo.domoi.Input" />
         </activity>
+        <activity
+            android:name=".hoso.CompareChart"
+            android:label="@string/title_activity_compare_chart"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

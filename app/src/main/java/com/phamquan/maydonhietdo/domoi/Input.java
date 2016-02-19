@@ -3,7 +3,6 @@ package com.phamquan.maydonhietdo.domoi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -300,7 +299,6 @@ public class Input extends AppCompatActivity {
                 min = arrFloat[i];
             }
         }
-
         return min;
     }
 
