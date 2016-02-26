@@ -97,7 +97,7 @@ public class Input extends AppCompatActivity {
 
     public void openChart() {
 
-        Intent intent = new Intent(Input.this, Chart.class);
+        Intent intent = new Intent(Input.this, CharPersonal.class);
         intent.putExtra("benTrai", phanTramTrai);
         intent.putExtra("benPhai", phanTramPhai);
         intent.putExtra("trungBinh", phanTramTrungBinh);

@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/dia_chi"
-        android:id="@+id/tv_dia_chi"
+        android:id="@+id/tv_dia_chi_c"
         android:layout_below="@+id/tv_ho_ten"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -40,12 +40,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/so_dien_thoai"
-        android:id="@+id/tv_so_dien_thoai"
+        android:id="@+id/tv_trieu_chung_c"
         android:layout_below="@+id/tv_ngay_sinh"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/tv_dia_chi"
-        android:layout_alignEnd="@+id/tv_dia_chi" />
+        android:layout_alignRight="@+id/tv_dia_chi_c"
+        android:layout_alignEnd="@+id/tv_dia_chi_c" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,11 +53,11 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/ngay_sinh"
         android:id="@+id/tv_ngay_sinh"
-        android:layout_below="@+id/tv_dia_chi"
+        android:layout_below="@+id/tv_dia_chi_c"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/tv_dia_chi"
-        android:layout_alignEnd="@+id/tv_dia_chi" />
+        android:layout_alignRight="@+id/tv_dia_chi_c"
+        android:layout_alignEnd="@+id/tv_dia_chi_c" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -72,11 +72,11 @@
         android:layout_height="wrap_content"
         android:text="@string/do_moi"
         android:id="@+id/btn_do_moi"
-        android:layout_below="@+id/tv_so_dien_thoai"
+        android:layout_below="@+id/tv_trieu_chung_c"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/tv_so_dien_thoai"
-        android:layout_alignEnd="@+id/tv_so_dien_thoai"
+        android:layout_alignRight="@+id/tv_trieu_chung_c"
+        android:layout_alignEnd="@+id/tv_trieu_chung_c"
         android:onClick="onClick" />
 
     <EditText

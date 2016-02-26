@@ -149,8 +149,8 @@ public class HoSoBenhNhan extends AppCompatActivity {
         btnDoMoi = (Button) findViewById(R.id.btn_do_moi);
         tvHoTen = (TextView) findViewById(R.id.tv_ho_ten);
         tvNamSinh = (TextView) findViewById(R.id.tv_ngay_sinh);
-        tvDiaChi = (TextView) findViewById(R.id.tv_dia_chi);
-        tvSoDienThoai = (TextView) findViewById(R.id.tv_so_dien_thoai);
+        tvDiaChi = (TextView) findViewById(R.id.tv_dia_chi_c);
+        tvSoDienThoai = (TextView) findViewById(R.id.tv_trieu_chung_c);
 
         edtLanX = (EditText) findViewById(R.id.edt_lan_x);
         edtLanY = (EditText) findViewById(R.id.edt_lan_y);

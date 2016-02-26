@@ -93,18 +93,18 @@
                 android:value="com.phamquan.maydonhietdo.MainActivity" />
         </activity>
         <activity
-            android:name=".domoi.Chart"
-            android:label="@string/title_activity_chart"
+            android:name=".hoso.CompareChart"
+            android:label="@string/title_activity_compare_chart"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".domoi.CharPersonal"
+            android:label="@string/title_activity_char_personal"
             android:parentActivityName=".domoi.Input"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.phamquan.maydonhietdo.domoi.Input" />
         </activity>
-        <activity
-            android:name=".hoso.CompareChart"
-            android:label="@string/title_activity_compare_chart"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
