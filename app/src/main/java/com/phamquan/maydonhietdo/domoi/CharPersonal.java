@@ -1,7 +1,6 @@
 package com.phamquan.maydonhietdo.domoi;
 
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -301,10 +300,14 @@ public class CharPersonal extends AppCompatActivity {
 
     public void setChartInfo(){
 
-        tvHoTen.setText(thongTin.get(0));
-        tvNamSinh.setText(thongTin.get(1));
-        tvDiaChi.setText(thongTin.get(2));
-        tvSoDienThoai.setText(thongTin.get(3));
-        tvTrieuChung.setText(thongTin.get(4));
+        try{
+            tvHoTen.setText(thongTin.get(0));
+            tvNamSinh.setText(thongTin.get(1));
+            tvDiaChi.setText(thongTin.get(2));
+            tvSoDienThoai.setText(thongTin.get(3));
+            tvTrieuChung.setText(thongTin.get(4));
+        } catch (Exception e){
+
+        }
     }
 }

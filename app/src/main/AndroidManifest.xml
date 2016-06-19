@@ -77,14 +77,14 @@
         <activity
             android:name=".hoso.HoSoBenhNhan"
             android:label="@string/title_activity_ho_so_benh_nhan"
-            android:parentActivityName=".hoso.ListResume"
+            android:parentActivityName=".hoso.DanhSachHoSo"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".hoso.ListResume" />
+                android:value=".hoso.DanhSachHoSo" />
         </activity>
         <activity
-            android:name=".hoso.ListResume"
+            android:name=".hoso.DanhSachHoSo"
             android:label="@string/title_activity_list_resume"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,11 +12,10 @@ import android.widget.AdapterView.*;
 import com.phamquan.maydonhietdo.database.BenhNhan;
 import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
 import com.phamquan.maydonhietdo.R;
-import com.phamquan.maydonhietdo.database.LanKham;
 
 //Danh sach ho so benh nhan
 
-public class ListResume extends AppCompatActivity {
+public class DanhSachHoSo extends AppCompatActivity {
 
     private ListView listViewResume;
     private BenhNhanDataSource datasource;
@@ -28,7 +26,7 @@ public class ListResume extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_resume);
+        setContentView(R.layout.activity_danh_sach_ho_so);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -53,7 +51,7 @@ public class ListResume extends AppCompatActivity {
             thongTin = new ArrayList<>();
             BenhNhan benhNhan = mangBenhNhan.get(position);
 
-            Intent intent = new Intent(ListResume.this, HoSoBenhNhan.class);
+            Intent intent = new Intent(DanhSachHoSo.this, HoSoBenhNhan.class);
 
             intent.putExtra("idBenhNhan" , String.valueOf(position +1));  //index trong SQLite bat dau tu 1
             intent.putExtra("hoTen" , benhNhan.getHoTen());

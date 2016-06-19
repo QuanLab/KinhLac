@@ -1,10 +1,12 @@
 package com.phamquan.maydonhietdo.hoso;
 
 import android.content.Intent;
+import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -14,10 +16,13 @@ import android.widget.Toast;
 import com.phamquan.maydonhietdo.R;
 import com.phamquan.maydonhietdo.database.BenhNhan;
 import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
+import com.phamquan.maydonhietdo.database.Helper;
 import com.phamquan.maydonhietdo.database.LanKham;
+import com.phamquan.maydonhietdo.domoi.CharPersonal;
 import com.phamquan.maydonhietdo.domoi.PersonInfo;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class HoSoBenhNhan extends AppCompatActivity {
@@ -50,11 +55,6 @@ public class HoSoBenhNhan extends AppCompatActivity {
         diaChi = bundle.getString("diaChi");
         soDienThoai = bundle.getString("soDienThoai");
 
-        thongTin.add(hoTen);
-        thongTin.add(namSinh);
-        thongTin.add(diaChi);
-        thongTin.add(soDienThoai);
-
         tvHoTen.setText(hoTen);
         tvNamSinh.setText(namSinh);
         tvDiaChi.setText(diaChi);
@@ -72,6 +72,7 @@ public class HoSoBenhNhan extends AppCompatActivity {
 
         ListAdapterLanKham adapter = new ListAdapterLanKham(this, R.layout.activity_dong_benh_nhan_mau, mangLanKham);
         lv_lan_kham.setAdapter(adapter);
+        lv_lan_kham.setOnItemClickListener(new ListClickHandler());
 
         btnSoSanh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,6 +155,53 @@ public class HoSoBenhNhan extends AppCompatActivity {
 
         edtLanX = (EditText) findViewById(R.id.edt_lan_x);
         edtLanY = (EditText) findViewById(R.id.edt_lan_y);
+    }
+
+    public class ListClickHandler implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
+
+            thongTin = new ArrayList<>();
+
+            LanKham lanKham = mangLanKham.get(position);
+
+            thongTin.add(hoTen);
+            thongTin.add(namSinh);
+            thongTin.add(diaChi);
+            thongTin.add(soDienThoai);
+
+            thongTin.add(lanKham.getTrieuChung());
+
+            String soLieu = lanKham.getSoLieu();
+
+            Log.e(this.getClass().toString() , soLieu);
+
+            float[] arrSoLieu = Helper.stringToFloat(soLieu);
+
+            float[] tayTrai = new float[6];
+            float[] tayPhai = new float[6];
+            float[] chanTrai = new float[6];
+            float[] chanPhai = new float[6];
+
+            for(int i= 0; i < 6; i++){
+
+                tayTrai[i] = arrSoLieu[i];
+                tayPhai[i] = arrSoLieu[i + 6];
+                chanTrai[i] = arrSoLieu[i + 12];
+                chanPhai[i] = arrSoLieu[i + 18];
+            }
+
+            Intent intent = new Intent(HoSoBenhNhan.this, CharPersonal.class);
+
+            intent.putExtra("tayTrai" , tayTrai);
+            intent.putExtra("tayPhai" , tayPhai);
+            intent.putExtra("chanTrai" , chanTrai);
+            intent.putExtra("chanPhai" ,chanPhai);
+            intent.putExtra("thongTin" , thongTin);
+
+            startActivity(intent);
+        }
     }
 
 }

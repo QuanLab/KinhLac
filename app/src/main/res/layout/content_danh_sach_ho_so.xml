@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".hoso.ListResume"
-    tools:showIn="@layout/activity_list_resume">
+    tools:context=".hoso.DanhSachHoSo"
+    tools:showIn="@layout/activity_danh_sach_ho_so">
 
     <ListView
         android:layout_width="wrap_content"

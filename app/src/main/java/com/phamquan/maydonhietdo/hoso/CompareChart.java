@@ -1,13 +1,7 @@
 package com.phamquan.maydonhietdo.hoso;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -18,6 +12,7 @@ import com.phamquan.maydonhietdo.R;
 import com.phamquan.maydonhietdo.database.Helper;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class CompareChart extends AppCompatActivity {
 
@@ -25,10 +20,6 @@ public class CompareChart extends AppCompatActivity {
     private ArrayList<String> thongTin;
     String soLieuX, soLieuY;
 
-    private String[] mMonth = new String[]{
-            "Tì", "Can", "Vị", "Đởm", "Thận", "Bàng quang",
-            "Phế", "Đại trường", "Tâm bào", "Tam tiêu", "Tâm", "Tiểu trường"
-    };
     public int[] COLOR_LEFT;
     public int[] COLOR_RIGHT;
     private static float[] benTrai;
@@ -39,19 +30,7 @@ public class CompareChart extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compare_chart);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-//        reflex();
         thongTin = new ArrayList<>();
         benTrai = new float[12];
         benPhai = new float[12];
@@ -65,13 +44,39 @@ public class CompareChart extends AppCompatActivity {
             thongTin = bundle.getStringArrayList("thongTin");
             soLieuX = bundle.getString("soLieuX");
             soLieuY = bundle.getString("soLieuY");
-        }
 
-        try{
-            benTrai = Helper.stringToFloat(soLieuX);
-            benPhai = Helper.stringToFloat(soLieuY);
-        }catch (Exception e){
-            Log.e("stringToFloat", "Loi" + e);
+            float[] soX = Helper.stringToFloat(soLieuX);
+            float[] soY = Helper.stringToFloat(soLieuY);
+
+            float[] tayTraiX = new float[6];
+            float[] tayPhaiX = new float[6];
+            float[] chanTraiX = new float[6];
+            float[] chanPhaiX = new float[6];
+
+            float[] tayTraiY = new float[6];
+            float[] tayPhaiY = new float[6];
+            float[] chanTraiY = new float[6];
+            float[] chanPhaiY = new float[6];
+
+            for(int i= 0; i < 6; i++){
+
+                tayTraiX[i] = soX[i];
+                tayPhaiX[i] = soX[i + 6];
+                chanTraiX[i] = soX[i + 12];
+                chanPhaiX[i] = soX[i + 18];
+
+                tayTraiY[i] = soY[i];
+                tayPhaiY[i] = soY[i + 6];
+                chanTraiY[i] = soY[i + 12];
+                chanPhaiY[i] = soY[i + 18];
+
+            }
+
+            Vector phanTramX = Helper.applyRule(tayTraiX, tayPhaiX, chanTraiX, chanPhaiX);
+            Vector phanTramY = Helper.applyRule(tayTraiY, tayPhaiY, chanTraiY, chanPhaiY);
+
+            benTrai = (float[]) phanTramX.get(2); //lay pham tram trung binh hai tay trong lan do X
+            benPhai = (float[]) phanTramY.get(2);
         }
 
         if(!thongTin.isEmpty()){
@@ -79,22 +84,24 @@ public class CompareChart extends AppCompatActivity {
         }
 
         for(int i = 0; i< 12; i++){
-            COLOR_LEFT[i] = getColor(benTrai[i]);
-            COLOR_RIGHT[i] = getColor(benPhai[i]);
+            COLOR_LEFT[i] = Helper.getColor(benTrai[i]);
+            COLOR_RIGHT[i] = Helper.getColor(benPhai[i]);
         }
 
         BarChart chart = (BarChart) findViewById(R.id.chartZoo);
 
-        BarData data = new BarData(getXAxisValues(), getDataSet(benTrai,benPhai));
+        BarData data = new BarData(getXAxisValues(), getDataSet(benTrai, benPhai));
         chart.setData(data);
-        chart.setDescription("My Chart");
-        chart.animateXY(2000, 2000);
+        data.setDrawValues(false);
+        chart.setDescription("");
+        chart.getXAxis().setTextSize(9);
+        chart.getXAxis().setLabelsToSkip(0);
         chart.invalidate();
     }
 
     private ArrayList<BarDataSet> getDataSet(float[] leftBar, float[] rightBar) {
 
-        ArrayList<BarDataSet> dataSets = null;
+        ArrayList<BarDataSet> dataSets;
 
         ArrayList<BarEntry> valueSet1 = new ArrayList<>();
         BarEntry v1e1 = new BarEntry(leftBar[0], 0); // Jan
@@ -162,33 +169,19 @@ public class CompareChart extends AppCompatActivity {
     private ArrayList<String> getXAxisValues() {
 
         ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("JAN");
-        xAxis.add("FEB");
-        xAxis.add("MAR");
-        xAxis.add("APR");
-        xAxis.add("MAY");
-        xAxis.add("JUN");
-        xAxis.add("JUL");
-        xAxis.add("AUG");
-        xAxis.add("SEP");
-        xAxis.add("OCT");
-        xAxis.add("NOV");
-        xAxis.add("DEC");
+        xAxis.add("TÌ");
+        xAxis.add("CAN");
+        xAxis.add("VỊ");
+        xAxis.add("ĐỞM");
+        xAxis.add("THẬN");
+        xAxis.add("BÀNG QUANG");
+        xAxis.add("PHẾ");
+        xAxis.add("ĐÂỊ TRƯỜNG");
+        xAxis.add("TÂM BÀO");
+        xAxis.add("TAM TIÊU");
+        xAxis.add("TÂM");
+        xAxis.add("TIỂU TRƯỜNG");
         return xAxis;
-    }
-
-    public int getColor(float barValue){
-
-        barValue = Math.abs(barValue);
-
-        if(barValue <50){
-            return Color.GREEN;
-        } else if(barValue >=50 && barValue<=100){
-            return Color.BLUE;
-        } else if(barValue >100 &&barValue<=200){
-            return Color.YELLOW;
-        }
-        return Color.RED;
     }
 
     public void setChartInfo(){
@@ -197,15 +190,6 @@ public class CompareChart extends AppCompatActivity {
         tvNamSinh.setText(thongTin.get(1));
         tvDiaChi.setText(thongTin.get(2));
         tvSoDienThoai.setText(thongTin.get(3));
-    }
-
-
-    private void reflex(){
-
-//        tvHoTen = (TextView) findViewById(R.id.tv_ho_ten_cp);
-//        tvNamSinh = (TextView) findViewById(R.id.tv_nam_sinh_cp);
-//        tvDiaChi = (TextView) findViewById(R.id.tv_dia_chi_cp);
-//        tvSoDienThoai = (TextView) findViewById(R.id.tv_so_dien_thoai_cp);
     }
 
 }

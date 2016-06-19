@@ -57,7 +57,7 @@ public class Input extends AppCompatActivity {
 
     public void onClick(View view) {
 
-        if (caculateInit()) {
+        if (getInputValue()) {
 
            if(!Helper.isDataSaved()){
                taoHoSoBenhNhan();
@@ -99,7 +99,7 @@ public class Input extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public boolean caculateInit() {
+    public boolean getInputValue() {
 
         String tieu_truong = edtTieuTruong.getText().toString();
         String tieu_truong_ = edtTieuTruong_.getText().toString();
@@ -151,19 +151,19 @@ public class Input extends AppCompatActivity {
         float pheP = Float.parseFloat(phe_);
 
 
-        tayTrai[0] = tieuTruong;
-        tayTrai[1] = tamT;
-        tayTrai[2] = tamTieu;
-        tayTrai[3] = tamBao;
-        tayTrai[4] = daiTruong;
-        tayTrai[5] = pheT;
+        tayTrai[0] = tieuTruong/10;
+        tayTrai[1] = tamT/10;
+        tayTrai[2] = tamTieu/10;
+        tayTrai[3] = tamBao/10;
+        tayTrai[4] = daiTruong/10;
+        tayTrai[5] = pheT/10;
 
-        tayPhai[0] = tieuTruong_;
-        tayPhai[1] = tamP;
-        tayPhai[2] = tamTieu_;
-        tayPhai[3] = tamBao_;
-        tayPhai[4] = daiTruong_;
-        tayPhai[5] = pheP;
+        tayPhai[0] = tieuTruong_/10;
+        tayPhai[1] = tamP/10;
+        tayPhai[2] = tamTieu_/10;
+        tayPhai[3] = tamBao_/10;
+        tayPhai[4] = daiTruong_/10;
+        tayPhai[5] = pheP/10;
 
         float bangQuang = Float.parseFloat(bang_quang);
         float bangQuang_ = Float.parseFloat(bang_quang_);
@@ -178,19 +178,19 @@ public class Input extends AppCompatActivity {
         float tiT = Float.parseFloat(ti);
         float tiP = Float.parseFloat(ti_);
 
-        chanTrai[0] = bangQuang;
-        chanTrai[1] = thanT;
-        chanTrai[2] = domT;
-        chanTrai[3] = viT;
-        chanTrai[4] = canT;
-        chanTrai[5] = tiT;
+        chanTrai[0] = bangQuang/10;
+        chanTrai[1] = thanT/10;
+        chanTrai[2] = domT/10;
+        chanTrai[3] = viT/10;
+        chanTrai[4] = canT/10;
+        chanTrai[5] = tiT/10;
 
-        chanPhai[0] = bangQuang_;
-        chanPhai[1] = thanP;
-        chanPhai[2] = domP;
-        chanPhai[3] = viP;
-        chanPhai[4] = canP;
-        chanPhai[5] = tiP;
+        chanPhai[0] = bangQuang_/10;
+        chanPhai[1] = thanP/10;
+        chanPhai[2] = domP/10;
+        chanPhai[3] = viP/10;
+        chanPhai[4] = canP/10;
+        chanPhai[5] = tiP/10;
 
         return true;
     }
