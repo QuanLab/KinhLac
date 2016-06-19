@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.phamquan.maydonhietdo.R;
 import com.phamquan.maydonhietdo.database.BenhNhan;
 import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
-import com.phamquan.maydonhietdo.database.DBAintergration;
+import com.phamquan.maydonhietdo.database.Helper;
 import com.phamquan.maydonhietdo.database.LanKham;
 
 import java.util.ArrayList;
@@ -35,20 +35,11 @@ public class Input extends AppCompatActivity {
             edtCan, edtCan_,
             edtTi, edtTi_;
 
-    private float maxHaiTay, minHaiTay, maxHaiChan, minHaiChan;
-    private float maxTayTrai, minTayTrai, maxTayPhai, minTayPhai;
-    private float maxChanTrai, minChanTrai, maxChanPhai, minChanPhai;
-
     // nhom nhiet do tren cac phan co the
     private float[] tayTrai = new float[6];
     private float[] tayPhai = new float[6];
     private float[] chanTrai = new float[6];
     private float[] chanPhai = new float[6];
-
-    //ti le phan tram  sau khi tinh
-    private static float[] phanTramTrai = new float[12];
-    private static float[] phanTramPhai = new float[12];
-    private static float[] phanTramTrungBinh = new float[12];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +59,9 @@ public class Input extends AppCompatActivity {
 
         if (caculateInit()) {
 
-           if(!DBAintergration.isDataSaved()){
+           if(!Helper.isDataSaved()){
                taoHoSoBenhNhan();
-               DBAintergration.setDataSaved(true);
+               Helper.setDataSaved(true);
            }
 
             switch (view.getId()) {
@@ -89,8 +80,10 @@ public class Input extends AppCompatActivity {
     public void openTable() {
 
         Intent intent = new Intent(this, Table.class);
-        intent.putExtra("benTrai", phanTramTrai);
-        intent.putExtra("benPhai", phanTramPhai);
+        intent.putExtra("tayTrai", tayTrai);
+        intent.putExtra("tayPhai", tayPhai);
+        intent.putExtra("chanTrai", chanTrai);
+        intent.putExtra("chanPhai", chanPhai);
         intent.putExtra("thongTin", thongTin);
         startActivity(intent);
     }
@@ -98,9 +91,10 @@ public class Input extends AppCompatActivity {
     public void openChart() {
 
         Intent intent = new Intent(Input.this, CharPersonal.class);
-        intent.putExtra("benTrai", phanTramTrai);
-        intent.putExtra("benPhai", phanTramPhai);
-        intent.putExtra("trungBinh", phanTramTrungBinh);
+        intent.putExtra("tayTrai", tayTrai);
+        intent.putExtra("tayPhai", tayPhai);
+        intent.putExtra("chanTrai", chanTrai);
+        intent.putExtra("chanPhai", chanPhai);
         intent.putExtra("thongTin", thongTin);
         startActivity(intent);
     }
@@ -198,65 +192,6 @@ public class Input extends AppCompatActivity {
         chanPhai[4] = canP;
         chanPhai[5] = tiP;
 
-        maxTayTrai = getMax(tayTrai);
-        maxTayPhai = getMax(tayPhai);
-        maxHaiTay = Math.max(maxTayTrai, maxTayPhai);
-
-        maxChanTrai = getMax(chanTrai);
-        maxChanPhai = getMax(chanPhai);
-        maxHaiChan = Math.max(maxChanTrai, maxChanPhai);
-
-        minTayTrai = getMin(tayTrai);
-        minTayPhai = getMin(tayPhai);
-        minHaiTay = Math.min(minTayTrai, minTayPhai);
-
-        minChanTrai = getMin(chanTrai);
-        minChanPhai = getMin(chanPhai);
-        minHaiChan = Math.min(minChanTrai, minChanPhai);
-
-        float percentTayTrai;
-        float percentChanTrai;
-        float percentTayPhai;
-        float percentChanPhai;
-        float percentTay;
-        float percentChan;
-
-        float maxMinHaiTay = maxHaiTay - minHaiTay;
-        float maxMinHaiChan = maxHaiChan - minHaiChan;
-
-        int j = 6;
-
-        for (int i = 0; i < 6; i++) {
-        /*
-        * 3*(nhietDoTayTrai + nhietDoTayPhai - nhietDoMaxOTay - nhietDoMinOTay)
-        * /(nhietDoMax - nhietDoMin)
-        * */
-            percentTayTrai = 300 * (tayTrai[i] + tayPhai[i] - maxTayTrai - minTayTrai) / maxMinHaiTay;
-            percentChanTrai = 300 * (chanTrai[i] + chanPhai[i] - maxChanTrai - minChanTrai) / maxMinHaiChan;
-
-            percentTayPhai = 300 * (tayTrai[i] + tayPhai[i] - maxTayPhai - minTayPhai) / maxMinHaiTay;
-            percentChanPhai = 300 * (chanTrai[i] + chanPhai[i] - maxChanPhai - minChanPhai) / maxMinHaiChan;
-
-            percentTay = 300 * (tayTrai[i] + tayPhai[i] - maxHaiTay - minHaiTay) / maxMinHaiTay;
-            percentChan = 300 * (chanTrai[i] + chanPhai[i] - maxHaiChan - minHaiChan) / maxMinHaiTay;
-
-            percentTayTrai = (float) Math.round(percentTayTrai * 100) / 100;
-            percentChanTrai = (float) Math.round(percentChanTrai * 100) / 100;
-            percentTayPhai = (float) Math.round(percentTayPhai * 100) / 100;
-            percentChanPhai = (float) Math.round(percentChanPhai * 100) / 100;
-            percentTay = (float) Math.round(percentTay * 100) / 100;
-            percentChan = (float) Math.round(percentChan * 100) / 100;
-
-            phanTramTrai[i] = percentTayTrai;
-            phanTramTrai[j] = percentChanTrai;
-
-            phanTramPhai[i] = percentTayPhai;
-            phanTramPhai[j] = percentChanPhai;
-
-            phanTramTrungBinh[i] = percentTay;
-            phanTramTrungBinh[j] = percentChan;
-            ++j;
-        }
         return true;
     }
 
@@ -265,12 +200,17 @@ public class Input extends AppCompatActivity {
         dataSource = new BenhNhanDataSource(this);
         dataSource.open();
 
-        if(!DBAintergration.isDaCoHoSo()){
+        if(!Helper.isDaCoHoSo()){
             dataSource.insertBenhNhan(new BenhNhan(thongTin.get(0), thongTin.get(1), thongTin.get(2), thongTin.get(3)));
             idBenhNhan = dataSource.countBenhNhan();
         }
 
-        String soLieu = DBAintergration.floatToString(phanTramTrungBinh);
+        StringBuilder soLieuBuffer = new StringBuilder();
+        soLieuBuffer.append(Helper.floatToString(tayTrai));
+        soLieuBuffer.append(Helper.floatToString(tayPhai));
+        soLieuBuffer.append(Helper.floatToString(chanTrai));
+        soLieuBuffer.append(Helper.floatToString(chanPhai));
+        String soLieu = new String(soLieuBuffer);
 
         String trieuChung = thongTin.get(4);
         String ngayDo = thongTin.get(5);
@@ -288,29 +228,6 @@ public class Input extends AppCompatActivity {
 
     public void showE() {
         Toast.makeText(this, "Nhập thiếu số liệu rồi ông bạn ơi!", Toast.LENGTH_SHORT).show();
-    }
-
-    public float getMin(float[] arrFloat) {
-
-        float min = arrFloat[0];
-
-        for (int i = 0; i < arrFloat.length; i++) {
-            if (arrFloat[i] < min) {
-                min = arrFloat[i];
-            }
-        }
-        return min;
-    }
-
-    public float getMax(float[] arrFloat) {
-
-        float max = arrFloat[0];
-        for (int i = 0; i < arrFloat.length; i++) {
-            if (arrFloat[i] > max) {
-                max = arrFloat[i];
-            }
-        }
-        return max;
     }
 
     private void reflex() {

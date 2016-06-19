@@ -15,7 +15,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.phamquan.maydonhietdo.R;
-import com.phamquan.maydonhietdo.database.DBAintergration;
+import com.phamquan.maydonhietdo.database.Helper;
 
 import java.util.ArrayList;
 
@@ -68,8 +68,8 @@ public class CompareChart extends AppCompatActivity {
         }
 
         try{
-            benTrai = DBAintergration.stringToFloat(soLieuX);
-            benPhai = DBAintergration.stringToFloat(soLieuY);
+            benTrai = Helper.stringToFloat(soLieuX);
+            benPhai = Helper.stringToFloat(soLieuY);
         }catch (Exception e){
             Log.e("stringToFloat", "Loi" + e);
         }

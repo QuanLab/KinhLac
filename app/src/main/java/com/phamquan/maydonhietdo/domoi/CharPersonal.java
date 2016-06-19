@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.phamquan.maydonhietdo.R;
+import com.phamquan.maydonhietdo.database.Helper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,6 +24,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Vector;
 
 public class CharPersonal extends AppCompatActivity {
 
@@ -30,6 +32,8 @@ public class CharPersonal extends AppCompatActivity {
     public int[] COLOR_RIGHT;
     public int[] COLOR_MID;
 
+
+    //ti le phan tram  sau khi tinh
     private float[] benTrai;
     private float[] benPhai;
     private float[] trungBinh;
@@ -56,10 +60,16 @@ public class CharPersonal extends AppCompatActivity {
 
         if(bundle!=null) {
 
-            benTrai = bundle.getFloatArray("benTrai");
-            benPhai = bundle.getFloatArray("benPhai");
-            trungBinh = bundle.getFloatArray("trungBinh");
+            float[] tayTrai = bundle.getFloatArray("tayTrai");
+            float[] tayPhai = bundle.getFloatArray("tayPhai");
+            float[] chanTrai = bundle.getFloatArray("chanTrai");
+            float[] chanPhai = bundle.getFloatArray("chanPhai");
             thongTin = bundle.getStringArrayList("thongTin");
+
+            Vector phanTram = Helper.applyRule(tayTrai, tayPhai, chanTrai, chanPhai);
+            benTrai = (float[]) phanTram.get(0);
+            benPhai = (float[]) phanTram.get(1);
+            trungBinh = (float[]) phanTram.get(2);
         }
 
         COLOR_LEFT = new int[12];
@@ -67,14 +77,16 @@ public class CharPersonal extends AppCompatActivity {
         COLOR_MID = new int[12];
 
         for(int i = 0; i< 12; i++){ // set color for each bar
-            COLOR_LEFT[i] = getColor(benTrai[i]);
-            COLOR_RIGHT[i] = getColor(benPhai[i]);
-            COLOR_MID[i] = getColor(trungBinh[i]);
+            COLOR_LEFT[i] = Helper.getColor(benTrai[i]);
+            COLOR_RIGHT[i] = Helper.getColor(benPhai[i]);
+            COLOR_MID[i] = Helper.getColor(trungBinh[i]);
         }
 
         chart = (BarChart) findViewById(R.id.chartZoom);
         dataTwoBar = new BarData(getXAxisValues(), getDataSet(benTrai,benPhai));
         dataOneBar = new BarData(getXAxisValues(), getDataSetOneBar(trungBinh));
+        dataOneBar.setDrawValues(false);
+        dataTwoBar.setDrawValues(false);
     }
 
     public void onClick(View view){
@@ -101,8 +113,9 @@ public class CharPersonal extends AppCompatActivity {
 
         setChartInfo();
         chart.setData(dataTwoBar);
-        chart.setDescription("My Chart");
-        chart.animateXY(2000 , 2000);
+        chart.setDescription("");
+        chart.getXAxis().setTextSize(9);
+        chart.getXAxis().setLabelsToSkip(0);
         chart.invalidate();
     }
 
@@ -110,8 +123,9 @@ public class CharPersonal extends AppCompatActivity {
 
         setChartInfo();
         chart.setData(dataOneBar);
-        chart.setDescription("My Chart");
-        chart.animateXY(2000 , 2000);
+        chart.setDescription("");
+        chart.getXAxis().setTextSize(9);
+        chart.getXAxis().setLabelsToSkip(0);
         chart.invalidate();
     }
 
@@ -212,7 +226,7 @@ public class CharPersonal extends AppCompatActivity {
         BarEntry v1e12 = new BarEntry(midBar[11], 11); // Jun
         valueSet1.add(v1e12);
 
-        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "Ben Trai");
+        BarDataSet barDataSet1 = new BarDataSet(valueSet1, "");
         barDataSet1.setColors(COLOR_MID);
         dataSets = new ArrayList<>();
         dataSets.add(barDataSet1);
@@ -235,20 +249,6 @@ public class CharPersonal extends AppCompatActivity {
         xAxis.add("TÂM");
         xAxis.add("TIỂU TRƯỜNG");
         return xAxis;
-    }
-
-    public int getColor(float barValue){
-
-        barValue = Math.abs(barValue);
-
-        if(barValue <50){
-            return Color.GREEN;
-        } else if(barValue >=50 && barValue<=100){
-            return Color.BLUE;
-        } else if(barValue >100 &&barValue<=200){
-            return Color.YELLOW;
-        }
-        return Color.RED;
     }
 
     public Bitmap createBitmap() {

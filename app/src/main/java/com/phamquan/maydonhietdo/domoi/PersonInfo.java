@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.phamquan.maydonhietdo.R;
-import com.phamquan.maydonhietdo.database.DBAintergration;
+import com.phamquan.maydonhietdo.database.Helper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,7 +35,7 @@ public class PersonInfo extends AppCompatActivity {
 
         if(bundle!=null){
 
-            DBAintergration.setDaCoHoSo(true);
+            Helper.setDaCoHoSo(true);
 
             idBenhNhan = bundle.getString("idBenhNhan");
             hoTen = bundle.getString("hoTen");
@@ -49,7 +49,7 @@ public class PersonInfo extends AppCompatActivity {
             edtSoDienThoai.setText(soDienThoai);
 
         } else {
-            DBAintergration.setDaCoHoSo(false);
+            Helper.setDaCoHoSo(false);
         }
 
         DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");

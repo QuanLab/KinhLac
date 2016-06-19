@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.phamquan.maydonhietdo.R;
+import com.phamquan.maydonhietdo.database.Helper;
+
+import java.util.Vector;
 
 public class Table extends AppCompatActivity {
 
@@ -37,8 +40,16 @@ public class Table extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
 
         if(bundle!=null){
-            float[] benTrai = bundle.getFloatArray("benTrai");
-            float[] benPhai = bundle.getFloatArray("benPhai");
+
+            float[] tayTrai = bundle.getFloatArray("tayTrai");
+            float[] tayPhai = bundle.getFloatArray("tayTrai");
+            float[] chanTrai = bundle.getFloatArray("tayTrai");
+            float[] chanPhai = bundle.getFloatArray("tayTrai");
+
+            Vector phanTram = Helper.applyRule(tayTrai, tayPhai, chanTrai, chanPhai);
+
+            float[] benTrai = (float[]) phanTram.get(0);
+            float[] benPhai = (float[]) phanTram.get(1);
 
             edtTieuTruong.setText(String.valueOf(benTrai[0]));
             edtTieuTruong_.setText(String.valueOf(benPhai[0]));
