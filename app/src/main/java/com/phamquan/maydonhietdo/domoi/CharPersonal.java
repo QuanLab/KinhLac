@@ -115,6 +115,7 @@ public class CharPersonal extends AppCompatActivity {
         chart.setDescription("");
         chart.getXAxis().setTextSize(9);
         chart.getXAxis().setLabelsToSkip(0);
+        chart.animateXY(2000 , 2000);
         chart.invalidate();
     }
 
@@ -125,6 +126,7 @@ public class CharPersonal extends AppCompatActivity {
         chart.setDescription("");
         chart.getXAxis().setTextSize(9);
         chart.getXAxis().setLabelsToSkip(0);
+        chart.animateXY(2000 , 2000);
         chart.invalidate();
     }
 

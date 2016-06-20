@@ -106,6 +106,14 @@ public class Helper {
             phanTramTrungBinh[i] = percentTay;
             phanTramTrungBinh[j] = percentChan;
             ++j;
+
+            phanTramPhai[5]*=0.75;
+            phanTramTrai[5]*=0.75;
+            phanTramTrungBinh[5]*=0.75;
+
+            phanTramPhai[10]*=1.25;
+            phanTramTrai[10]*=1.25;
+            phanTramTrungBinh[10]*=1.25;
         }
 
         Vector phanTram = new Vector();
