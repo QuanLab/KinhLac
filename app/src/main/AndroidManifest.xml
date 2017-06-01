@@ -97,7 +97,7 @@
             android:label="@string/title_activity_compare_chart"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".domoi.CharPersonal"
+            android:name=".domoi.ChartPersonal"
             android:label="@string/title_activity_char_personal"
             android:parentActivityName=".domoi.Input"
             android:theme="@style/AppTheme.NoActionBar">

@@ -1,7 +1,6 @@
 package com.phamquan.maydonhietdo.hoso;
 
 import android.content.Intent;
-import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -18,11 +17,10 @@ import com.phamquan.maydonhietdo.database.BenhNhan;
 import com.phamquan.maydonhietdo.database.BenhNhanDataSource;
 import com.phamquan.maydonhietdo.database.Helper;
 import com.phamquan.maydonhietdo.database.LanKham;
-import com.phamquan.maydonhietdo.domoi.CharPersonal;
+import com.phamquan.maydonhietdo.domoi.ChartPersonal;
 import com.phamquan.maydonhietdo.domoi.PersonInfo;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 
 public class HoSoBenhNhan extends AppCompatActivity {
@@ -192,7 +190,7 @@ public class HoSoBenhNhan extends AppCompatActivity {
                 chanPhai[i] = arrSoLieu[i + 18];
             }
 
-            Intent intent = new Intent(HoSoBenhNhan.this, CharPersonal.class);
+            Intent intent = new Intent(HoSoBenhNhan.this, ChartPersonal.class);
 
             intent.putExtra("tayTrai" , tayTrai);
             intent.putExtra("tayPhai" , tayPhai);

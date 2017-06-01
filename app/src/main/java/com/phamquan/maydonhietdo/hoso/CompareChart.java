@@ -93,7 +93,6 @@ public class CompareChart extends AppCompatActivity {
         BarData data = new BarData(getXAxisValues(), getDataSet(benTrai, benPhai));
         chart.setData(data);
         data.setDrawValues(false);
-        chart.setDescription("");
         chart.getXAxis().setTextSize(9);
         chart.getXAxis().setLabelsToSkip(0);
         chart.animateXY(2000 , 2000);

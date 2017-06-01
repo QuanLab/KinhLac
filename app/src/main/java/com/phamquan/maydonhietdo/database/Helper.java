@@ -1,8 +1,6 @@
 package com.phamquan.maydonhietdo.database;
 
-
 import android.graphics.Color;
-
 import java.util.Vector;
 
 public class Helper {
@@ -39,88 +37,56 @@ public class Helper {
         return arr;
     }
 
-    public static Vector applyRule(float[] tayTrai, float[] tayPhai, float[] chanTrai, float[] chanPhai){
-        float maxHaiTay, minHaiTay, maxHaiChan, minHaiChan;
-        float maxTayTrai, minTayTrai, maxTayPhai, minTayPhai;
-        float maxChanTrai, minChanTrai, maxChanPhai, minChanPhai;
-
+    public static Vector applyRule(float[] tayTrai, float[] tayPhai, float[] chanTrai, float[] chanPhai) {
         float[] phanTramTrai = new float[12];
         float[] phanTramPhai = new float[12];
         float[] phanTramTrungBinh = new float[12];
-
-        maxTayTrai = getMax(tayTrai);
-        maxTayPhai = getMax(tayPhai);
-        maxHaiTay = Math.max(maxTayTrai, maxTayPhai);
-
-        maxChanTrai = getMax(chanTrai);
-        maxChanPhai = getMax(chanPhai);
-        maxHaiChan = Math.max(maxChanTrai, maxChanPhai);
-
-        minTayTrai = getMin(tayTrai);
-        minTayPhai = getMin(tayPhai);
-        minHaiTay = Math.min(minTayTrai, minTayPhai);
-
-        minChanTrai = getMin(chanTrai);
-        minChanPhai = getMin(chanPhai);
-        minHaiChan = Math.min(minChanTrai, minChanPhai);
-
-        float percentTayTrai;
-        float percentChanTrai;
-        float percentTayPhai;
-        float percentChanPhai;
-        float percentTay;
-        float percentChan;
-
+        float maxTayTrai = getMax(tayTrai);
+        float maxTayPhai = getMax(tayPhai);
+        float maxHaiTay = Math.max(maxTayTrai, maxTayPhai);
+        float maxChanTrai = getMax(chanTrai);
+        float maxChanPhai = getMax(chanPhai);
+        float maxHaiChan = Math.max(maxChanTrai, maxChanPhai);
+        float minTayTrai = getMin(tayTrai);
+        float minTayPhai = getMin(tayPhai);
+        float minHaiTay = Math.min(minTayTrai, minTayPhai);
+        float minChanTrai = getMin(chanTrai);
+        float minChanPhai = getMin(chanPhai);
+        float minHaiChan = Math.min(minChanTrai, minChanPhai);
         float maxMinHaiTay = maxHaiTay - minHaiTay;
         float maxMinHaiChan = maxHaiChan - minHaiChan;
-
         int j = 6;
-
         for (int i = 0; i < 6; i++) {
-        /*
-        * 3*(nhietDoTayTrai + nhietDoTayPhai - nhietDoMaxOTay - nhietDoMinOTay)
-        * /(nhietDoMax - nhietDoMin)
-        * */
-            percentTayTrai = 300 * (tayTrai[i] + tayPhai[i] - maxTayTrai - minTayTrai) / maxMinHaiTay;
-            percentChanTrai = 300 * (chanTrai[i] + chanPhai[i] - maxChanTrai - minChanTrai) / maxMinHaiChan;
-
-            percentTayPhai = 300 * (tayTrai[i] + tayPhai[i] - maxTayPhai - minTayPhai) / maxMinHaiTay;
-            percentChanPhai = 300 * (chanTrai[i] + chanPhai[i] - maxChanPhai - minChanPhai) / maxMinHaiChan;
-
-            percentTay = 300 * (tayTrai[i] + tayPhai[i] - maxHaiTay - minHaiTay) / maxMinHaiTay;
-            percentChan = 300 * (chanTrai[i] + chanPhai[i] - maxHaiChan - minHaiChan) / maxMinHaiTay;
-
-            percentTayTrai = (float) Math.round(percentTayTrai * 100) / 100;
-            percentChanTrai = (float) Math.round(percentChanTrai * 100) / 100;
-            percentTayPhai = (float) Math.round(percentTayPhai * 100) / 100;
-            percentChanPhai = (float) Math.round(percentChanPhai * 100) / 100;
-            percentTay = (float) Math.round(percentTay * 100) / 100;
-            percentChan = (float) Math.round(percentChan * 100) / 100;
-
+            float percentChanTrai = (300.0f * (((chanTrai[i] + chanPhai[i]) - maxChanTrai) - minChanTrai)) / maxMinHaiChan;
+            float percentTayPhai = (300.0f * (((tayTrai[i] + tayPhai[i]) - maxTayPhai) - minTayPhai)) / maxMinHaiTay;
+            float percentChanPhai = (300.0f * (((chanTrai[i] + chanPhai[i]) - maxChanPhai) - minChanPhai)) / maxMinHaiChan;
+            float percentTay = (300.0f * (((tayTrai[i] + tayPhai[i]) - maxHaiTay) - minHaiTay)) / maxMinHaiTay;
+            float percentChan = (300.0f * (((chanTrai[i] + chanPhai[i]) - maxHaiChan) - minHaiChan)) / maxMinHaiTay;
+            float percentTayTrai = ((float) Math.round(100.0f * ((300.0f * (((tayTrai[i] + tayPhai[i]) - maxTayTrai) - minTayTrai)) / maxMinHaiTay))) / 100.0f;
+            percentChanTrai = ((float) Math.round(100.0f * percentChanTrai)) / 100.0f;
+            percentTayPhai = ((float) Math.round(100.0f * percentTayPhai)) / 100.0f;
+            percentChanPhai = ((float) Math.round(100.0f * percentChanPhai)) / 100.0f;
+            percentTay = ((float) Math.round(100.0f * percentTay)) / 100.0f;
+            percentChan = ((float) Math.round(100.0f * percentChan)) / 100.0f;
             phanTramTrai[i] = percentTayTrai;
             phanTramTrai[j] = percentChanTrai;
-
             phanTramPhai[i] = percentTayPhai;
             phanTramPhai[j] = percentChanPhai;
-
             phanTramTrungBinh[i] = percentTay;
             phanTramTrungBinh[j] = percentChan;
-            ++j;
-
-            phanTramPhai[5]*=0.75;
-            phanTramTrai[5]*=0.75;
-            phanTramTrungBinh[5]*=0.75;
-
-            phanTramPhai[10]*=1.25;
-            phanTramTrai[10]*=1.25;
-            phanTramTrungBinh[10]*=1.25;
+            j++;
+            phanTramPhai[5] = (float) (((double) phanTramPhai[5]) + (0.25d * ((double) Math.abs(phanTramPhai[5]))));
+            phanTramTrai[5] = (float) (((double) phanTramTrai[5]) + (0.25d * ((double) Math.abs(phanTramTrai[5]))));
+            phanTramTrungBinh[5] = (float) (((double) phanTramTrungBinh[5]) + (0.25d * ((double) Math.abs(phanTramTrungBinh[5]))));
+            phanTramPhai[10] = (float) (((double) phanTramPhai[10]) - (0.25d * ((double) Math.abs(phanTramPhai[10]))));
+            phanTramTrai[10] = (float) (((double) phanTramTrai[10]) - (0.25d * ((double) Math.abs(phanTramPhai[10]))));
+            phanTramTrungBinh[10] = (float) (((double) phanTramTrungBinh[10]) - (0.25d * ((double) Math.abs(phanTramPhai[10]))));
         }
-
         Vector phanTram = new Vector();
         phanTram.addElement(phanTramTrai);
         phanTram.addElement(phanTramPhai);
         phanTram.addElement(phanTramTrungBinh);
-        return phanTram ;
+        return phanTram;
     }
 
     public static float getMin(float[] arrFloat) {

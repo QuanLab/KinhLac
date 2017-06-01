@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".domoi.CharPersonal">
+    tools:context=".domoi.ChartPersonal">
 
-    <include layout="@layout/content_char_personal" />
+    <include layout="@layout/content_chart_personal" />
 
 </android.support.design.widget.CoordinatorLayout>

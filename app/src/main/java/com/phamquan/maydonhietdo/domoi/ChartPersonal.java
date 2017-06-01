@@ -1,10 +1,7 @@
 package com.phamquan.maydonhietdo.domoi;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,22 +12,14 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.phamquan.maydonhietdo.R;
 import com.phamquan.maydonhietdo.database.Helper;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Vector;
 
-public class CharPersonal extends AppCompatActivity {
+public class ChartPersonal extends AppCompatActivity {
 
     public int[] COLOR_LEFT;
     public int[] COLOR_RIGHT;
     public int[] COLOR_MID;
-
 
     //ti le phan tram  sau khi tinh
     private float[] benTrai;
@@ -39,10 +28,7 @@ public class CharPersonal extends AppCompatActivity {
 
     private ArrayList<String> thongTin;
 
-    TextView tvHoTen, tvNamSinh, tvDiaChi, tvSoDienThoai, tvTrieuChung;
-
-    private View rootView;
-    Bitmap bitmap;
+    private TextView tvHoTen, tvNamSinh, tvDiaChi, tvSoDienThoai, tvTrieuChung;
     private BarChart chart;
     BarData dataTwoBar, dataOneBar;
 
@@ -50,9 +36,8 @@ public class CharPersonal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_char_personal);
+        setContentView(R.layout.activity_chart_personal);
 
-        rootView = findViewById(android.R.id.content).getRootView();
         mappingValue();
 
         Bundle bundle = getIntent().getExtras();
@@ -97,10 +82,6 @@ public class CharPersonal extends AppCompatActivity {
                 break;
             case R.id.btnMotCot:
                 openOneBarChart();
-                break;
-            case R.id.btnLuuAnh:
-                bitmap = createBitmap();
-                saveBitmap(bitmap);
                 break;
             case R.id.btnXong:
                 finish();
@@ -237,58 +218,19 @@ public class CharPersonal extends AppCompatActivity {
     private ArrayList<String> getXAxisValues() {
 
         ArrayList<String> xAxis = new ArrayList<>();
-        xAxis.add("TÌ");
-        xAxis.add("CAN");
-        xAxis.add("VỊ");
-        xAxis.add("ĐỞM");
-        xAxis.add("THẬN");
-        xAxis.add("BÀNG QUANG");
-        xAxis.add("PHẾ");
-        xAxis.add("ĐÂỊ TRƯỜNG");
-        xAxis.add("TÂM BÀO");
-        xAxis.add("TAM TIÊU");
-        xAxis.add("TÂM");
         xAxis.add("TIỂU TRƯỜNG");
+        xAxis.add("TÂM");
+        xAxis.add("TAM TIÊU");
+        xAxis.add("TÂM BÀO");
+        xAxis.add("ĐẠI TRƯỜNG");
+        xAxis.add("PHẾ");
+        xAxis.add("BÀNG QUANG");
+        xAxis.add("THẬN");
+        xAxis.add("ĐỞM");
+        xAxis.add("VỊ");
+        xAxis.add("CAN");
+        xAxis.add("TÌ");
         return xAxis;
-    }
-
-    public Bitmap createBitmap() {
-
-        rootView.setDrawingCacheEnabled(true);
-        rootView.buildDrawingCache(false);
-
-        if(rootView.getDrawingCache() != null) {
-            Bitmap  bitmap = Bitmap.createBitmap(rootView.getDrawingCache());
-            rootView.setDrawingCacheEnabled(false);
-            return bitmap;
-        } else {
-            return null;
-        }
-    }
-
-
-    public void saveBitmap(Bitmap bitmap) {
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        Calendar cal = Calendar.getInstance();
-        String strDateTime = dateFormat.format(cal.getTime());
-
-        File imagePath = new File(Environment.getExternalStorageDirectory() + "/" + strDateTime +".png");
-        Log.e(this.getClass().toString(), "" + imagePath.getAbsolutePath());
-        FileOutputStream fos;
-
-        try {
-
-            fos = new FileOutputStream(imagePath);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-
-        } catch (FileNotFoundException e) {
-            Log.e("GREC", e.getMessage(), e);
-        } catch (IOException e) {
-            Log.e("GREC", e.getMessage(), e);
-        }
     }
 
     public void mappingValue(){

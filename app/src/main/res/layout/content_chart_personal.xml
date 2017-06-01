@@ -42,23 +42,11 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/luu_anh"
-        android:id="@+id/btnLuuAnh"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/btnMotCot"
-        android:layout_toEndOf="@+id/btnMotCot"
-        android:onClick="onClick" />
-
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="@string/xong"
         android:id="@+id/btnXong"
+        android:onClick="onClick"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/btnHaiCot"
-        android:layout_toStartOf="@+id/btnHaiCot"
-        android:onClick="onClick" />
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
